@@ -138,72 +138,20 @@
 </div>
 
 <script>
-const video   = document.getElementById('bee-video');
-const track   = document.getElementById('scroll-track');
-const hint    = document.getElementById('hint');
+const video = document.getElementById('bee-video');
+const hint  = document.getElementById('hint');
 
-const AUTO_PLAY_END = 1.0; // seconds that play automatically
+video.muted = true;
+video.loop  = true;
 
-let mode       = 'auto';   // 'auto' | 'scroll'
-let rafQueued  = false;
-let hintHidden = false;
+video.addEventListener('loadedmetadata', () => video.play());
+if (video.readyState >= 1) video.play();
 
-// ── Scroll-driven logic ──────────────────────────────────────────────────────
-function getScrollProgress() {
-  const maxScroll = track.offsetHeight - window.innerHeight;
-  return maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
-}
-
-function scrollTimeFromProgress(progress) {
-  // Maps 0→1 scroll progress to AUTO_PLAY_END→duration
-  return AUTO_PLAY_END + progress * ((video.duration || AUTO_PLAY_END) - AUTO_PLAY_END);
-}
-
-function applyScrollTime() {
-  rafQueued = false;
-  if (video.readyState >= 1) {
-    video.currentTime = scrollTimeFromProgress(getScrollProgress());
-  }
-}
-
-function onScroll() {
-  if (mode !== 'scroll') return;
-
-  if (!rafQueued) {
-    rafQueued = true;
-    requestAnimationFrame(applyScrollTime);
-  }
-
-  if (!hintHidden && window.scrollY > 20) {
-    hintHidden = true;
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20 && !hint.classList.contains('hidden')) {
     hint.classList.add('hidden');
   }
-}
-
-// ── Auto-play first second ───────────────────────────────────────────────────
-function startAutoPlay() {
-  video.currentTime = 0;
-  video.play();
-}
-
-video.addEventListener('timeupdate', () => {
-  if (mode === 'auto' && video.currentTime >= AUTO_PLAY_END) {
-    video.pause();
-    video.currentTime = AUTO_PLAY_END;
-    mode = 'scroll';
-    // Snap to scroll position in case user already scrolled
-    applyScrollTime();
-  }
-});
-
-video.addEventListener('loadedmetadata', () => {
-  startAutoPlay();
-});
-
-// Fallback if metadata already loaded (cached)
-if (video.readyState >= 1) startAutoPlay();
-
-window.addEventListener('scroll', onScroll, { passive: true });
+}, { passive: true });
 </script>
 </body>
 </html>
