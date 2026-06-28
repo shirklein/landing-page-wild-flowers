@@ -403,7 +403,10 @@
     }
     .card-label {
       position: absolute;
-      inset: 0;
+      top: -10%;
+      left: -10%;
+      width: 80%;
+      height: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -412,15 +415,15 @@
     }
     .card-label img {
       position: absolute;
-      inset: -18%;
-      width: 136%;
-      height: 136%;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
       clip-path: polygon(50% 50%, 50% 0%, 50% 0%);
     }
     .card-label span {
       font-family: 'Narkiss Yair Variable', serif;
-      font-size: 9px;
+      font-size: clamp(9px, 1.2vw, 18px);
       color: #360EA7;
       position: relative;
       z-index: 1;
@@ -786,10 +789,13 @@
   const cardsEl   = document.getElementById('cards-frame3');
   const cardEls   = Array.from(cardsEl.querySelectorAll('.card-rect'));
 
-  const CARD_COLORS = ['#FFF22D','#FFCE00','#00CCF0','#CFFF10','#93EDEB','#F7559D','#FFC5EE'];
-  cardEls.forEach(c => {
-    c.style.background = CARD_COLORS[Math.floor(Math.random() * CARD_COLORS.length)];
-  });
+  const FIXED_COLORS = [
+    '#93EDEB','#CFFF10','#F7559D','#00CCF0','#FFCE00','#FFCE00',
+    '#FFF22D','#FFC5EE','#93EDEB','#FFC5EE','#FFCE00','#CFFF10',
+    '#CFFF10','#F7559D','#FFCE00','#FFF22D','#FFF22D','#F7559D',
+    '#93EDEB','#FFCE00','#00CCF0','#FFC5EE','#FFF22D','#00CCF0'
+  ];
+  cardEls.forEach((c, i) => { c.style.background = FIXED_COLORS[i]; });
 
   // pick 3 random cards for "נדיר" label
   const nidirIndices = [];
@@ -797,23 +803,21 @@
     const r = Math.floor(Math.random() * 24);
     if (!nidirIndices.includes(r)) nidirIndices.push(r);
   }
-  const nidirLabels = nidirIndices.map(i => {
+  const nidirLabels = nidirIndices.map((cardIdx, order) => {
     const wrap = document.createElement('div');
     wrap.className = 'card-label';
 
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('viewBox', '0 0 100 52');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    // slightly imperfect hand-drawn oval
-    path.setAttribute('d', 'M50,4 C72,2 96,11 97,26 C98,41 74,49 50,48 C26,49 2,41 3,26 C2,11 28,2 50,4 Z');
-    svg.appendChild(path);
+    const img = document.createElement('img');
+    img.src = encodeURIComponent('הקפה בעט סגול כחול.png');
+    img.alt = '';
+    img.style.animationDelay = (order * 0.55) + 's';
 
     const txt = document.createElement('span');
     txt.textContent = 'נדיר';
-    wrap.appendChild(svg);
+    wrap.appendChild(img);
     wrap.appendChild(txt);
-    cardEls[i].appendChild(wrap);
-    return wrap;
+    cardEls[cardIdx].appendChild(wrap);
+    return { wrap, order };
   });
 
   // cards appear after "24" is fully typed in frame 2
@@ -830,24 +834,23 @@
       cardEls.forEach((c, i) => {
         c.style.opacity = localP > i / 24 ? 1 : 0;
       });
-      nidirLabels.forEach(l => l.classList.remove('visible'));
+      nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
     } else if (frameIdx === 3) {
       cardsEl.style.opacity = opacity;
       cardEls.forEach(c => { c.style.opacity = 1; });
       const showNdirim = chars >= NDIRIM_CHAR;
-      nidirLabels.forEach(l => {
-        if (showNdirim && !l.classList.contains('visible')) {
-          // restart animation by removing class, forcing reflow, re-adding
-          l.classList.remove('visible');
-          void l.offsetWidth;
-          l.classList.add('visible');
+      nidirLabels.forEach(({ wrap }) => {
+        if (showNdirim && !wrap.classList.contains('visible')) {
+          wrap.classList.remove('visible');
+          void wrap.offsetWidth;
+          wrap.classList.add('visible');
         } else if (!showNdirim) {
-          l.classList.remove('visible');
+          wrap.classList.remove('visible');
         }
       });
     } else {
       cardsEl.style.opacity = 0;
-      nidirLabels.forEach(l => l.classList.remove('visible'));
+      nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
     }
   }
 
