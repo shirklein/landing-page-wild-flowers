@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>פרחי הבר — זרעים מהטבע הישראלי</title>
+  <style>
+    @font-face {
+      font-family: 'Narkiss Yair Variable';
+      src: url('NarkissYair-Variable-TRIAL.ttf') format('truetype');
+      font-weight: 100 900;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #ffffff;
+      --sage: #360EA7;
+      --dark-sage: #360EA7;
+      --terracotta: #360EA7;
+      --sand: #d0cce8;
+      --text: #360EA7;
+      --light-text: #360EA7;
+    }
+
+    body {
+      font-family: 'Narkiss Yair Variable', serif;
+      background-color: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── ניווט ── */
+    nav {
+      background-color: var(--dark-sage);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--sand);
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--cream);
+    }
+
+    /* ── עמודים ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── עמוד הבית ── */
+    .hero {
+      background: linear-gradient(160deg, #e8ead0 0%, var(--cream) 60%);
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      border-bottom: 2px solid var(--sand);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--sage);
+      color: var(--cream);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--dark-sage);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--light-text);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .btn-primary {
+      background: var(--terracotta);
+      color: #fff;
+      border: none;
+      padding: 0.85rem 2.5rem;
+      font-family: 'Narkiss Yair Variable', serif;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-primary:hover {
+      background: #a85d38;
+      transform: translateY(-1px);
+    }
+
+    .about-section {
+      max-width: 760px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      gap: 3rem;
+    }
+
+    .about-section h2 {
+      font-size: 1.7rem;
+      color: var(--dark-sage);
+      margin-bottom: 0.75rem;
+    }
+
+    .about-section p {
+      line-height: 1.9;
+      color: var(--light-text);
+      font-size: 1.05rem;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 0 2rem;
+      max-width: 900px;
+      margin: 0 auto 5rem;
+    }
+
+    .value-card {
+      background: #fff;
+      border: 1px solid var(--sand);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .value-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .value-card h3 { color: var(--dark-sage); margin-bottom: 0.5rem; }
+    .value-card p { font-size: 0.9rem; color: var(--light-text); line-height: 1.6; }
+
+    /* ── חנות הזרעים ── */
+    .shop-header {
+      background: var(--dark-sage);
+      color: var(--cream);
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+    }
+
+    .shop-header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .shop-header p { font-size: 1rem; opacity: 0.8; }
+
+    .seeds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    .seed-card {
+      background: #fff;
+      border: 1px solid var(--sand);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+
+    .seed-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transform: translateY(-3px);
+    }
+
+    .seed-card-img {
+      width: 100%;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      background: var(--cream);
+    }
+
+    .seed-card-body { padding: 1rem; }
+    .seed-card-body h3 { font-size: 1rem; color: var(--dark-sage); margin-bottom: 0.25rem; }
+    .seed-card-body .latin { font-style: italic; font-size: 0.8rem; color: var(--light-text); }
+    .seed-card-body .tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: var(--cream);
+      border: 1px solid var(--sand);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2rem;
+      color: var(--sage);
+    }
+
+    /* ── עמוד מוצר ── */
+    .product-back {
+      padding: 1.5rem 2rem 0;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .product-back button {
+      background: none;
+      border: 1px solid var(--sage);
+      color: var(--sage);
+      font-family: 'Narkiss Yair Variable', serif;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 2rem auto 5rem;
+      padding: 0 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .product-layout { grid-template-columns: 1fr; }
+    }
+
+    .product-visual {
+      background: #fff;
+      border: 1px solid var(--sand);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      aspect-ratio: 1;
+    }
+
+    .product-info h1 { font-size: 1.8rem; color: var(--dark-sage); margin-bottom: 0.25rem; }
+    .product-info .latin { font-style: italic; color: var(--light-text); margin-bottom: 1.5rem; }
+
+    .product-info p {
+      line-height: 1.85;
+      color: var(--light-text);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .details-list {
+      list-style: none;
+      border: 1px solid var(--sand);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .details-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.65rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .details-list li:not(:last-child) { border-bottom: 1px solid var(--sand); }
+    .details-list li span:first-child { color: var(--light-text); }
+    .details-list li span:last-child { font-weight: bold; color: var(--text); }
+
+    footer {
+      background: var(--dark-sage);
+      color: var(--sand);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── עמוד הבית — fixed stage ── */
+    #home-scroll-space {
+      height: calc(7 * 160vh + 200vh);
+    }
+
+    #text-stage {
+      position: fixed;
+      top: 40vh;
+      left: 50%;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 0 5vw 2rem;
+      pointer-events: none;
+    }
+
+    #scroll-hint {
+      position: fixed;
+      bottom: 2.5rem;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text);
+      font-size: 0.85rem;
+      opacity: 0.6;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    #scroll-hint.hidden {
+      opacity: 0;
+    }
+
+    #scroll-hint svg {
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(5px); }
+    }
+
+    .frame-text {
+      font-size: clamp(1.6rem, 4vw, 3rem);
+      color: var(--text);
+      text-align: right;
+      width: 100%;
+      line-height: 1.5;
+    }
+
+    .frame-text .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--text);
+      margin-right: 2px;
+      vertical-align: middle;
+      animation: blink 0.8s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ── מלבנים פריים 3 ── */
+    #cards-frame3 {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 50%;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 1vw;
+      width: 42vw;
+    }
+    .card-rect {
+      aspect-ratio: 8 / 14;
+      opacity: 0;
+      position: relative;
+    }
+    .card-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .card-label img {
+      position: absolute;
+      inset: -18%;
+      width: 136%;
+      height: 136%;
+      object-fit: contain;
+    }
+    .card-label span {
+      font-family: 'Narkiss Yair Variable', serif;
+      font-size: 9px;
+      color: #360EA7;
+      position: relative;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .card-label.visible { opacity: 1; }
+    .card-label img {
+      clip-path: polygon(50% 50%, 50% 0%, 50% 0%);
+    }
+    .card-label.visible img {
+      animation: revealCircle 0.65s linear forwards;
+    }
+    @keyframes revealCircle {
+      0%   { clip-path: polygon(50% 50%, 50% 0%, 50% 0%); }
+      12%  { clip-path: polygon(50% 50%, 50% 0%, 100% 0%); }
+      25%  { clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%); }
+      37%  { clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%); }
+      50%  { clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%); }
+      62%  { clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%); }
+      75%  { clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%); }
+      87%  { clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%); }
+      100% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+    }
+
+    /* ── זרעים מתעופפים ── */
+    .seed-p {
+      position: fixed;
+      width: 46px;
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .btn-shop {
+      background: var(--text);
+      color: #fff;
+      border: none;
+      padding: 0.85rem 2.5rem;
+      font-family: 'Narkiss Yair Variable', serif;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      margin-top: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s, background 0.2s, transform 0.1s;
+    }
+
+    .btn-shop.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .btn-shop:hover {
+      background: #2508a0;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo" onclick="showPage('home')">🌿 פרחי הבר</span>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">בית</a></li>
+    <li><a href="#" onclick="showPage('shop')" id="nav-shop">חנות הזרעים</a></li>
+  </ul>
+</nav>
+
+<!-- ── עמוד הבית ── -->
+<div id="page-home" class="page active">
+  <div id="cards-frame3"><div class="cards-grid"><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div></div></div>
+  <img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" />
+  <div id="home-scroll-space"></div>
+  <div id="text-stage">
+    <p class="frame-text" id="typewriter"></p>
+    <button class="btn-shop" id="btn-shop" onclick="showPage('shop')">לחנות הזרעים ←</button>
+  </div>
+  <div id="scroll-hint">
+    <span>גללו למטה</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 3L8 13M8 13L4 9M8 13L12 9" stroke="#360EA7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ── חנות הזרעים ── -->
+<div id="page-shop" class="page">
+  <div class="shop-header">
+    <h1>חנות הזרעים</h1>
+    <p>18 מינים — בחרי את פרחי הבר שלך</p>
+  </div>
+  <div class="seeds-grid" id="seeds-grid"></div>
+</div>
+
+<!-- ── עמוד מוצר ── -->
+<div id="page-product" class="page">
+  <div class="product-back">
+    <button onclick="showPage('shop')">← חזרה לחנות</button>
+  </div>
+  <div class="product-layout">
+    <div class="product-visual" id="product-emoji"></div>
+    <div class="product-info">
+      <h1 id="product-name"></h1>
+      <p class="latin" id="product-latin"></p>
+      <p id="product-desc"></p>
+      <ul class="details-list" id="product-details"></ul>
+      <button class="btn-primary">הוסיפי לסל 🛒</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 פרחי הבר · עיצוב ואיסוף זרעים מהטבע הישראלי
+</footer>
+
+<script>
+  const seeds = [
+    { id: 1,  emoji: "🌼", name: "חמציץ שעיר",        latin: "Oxalis hirsuta",           season: "חורף–אביב",         habitat: "שדות",               color: "צהוב",         desc: "[תיאור קצר של הצמח, מאפיינים, ולב הסיפור שלו בנוף הישראלי]" },
+    { id: 2,  emoji: "🌸", name: "כלנית מצויה",        latin: "Anemone coronaria",         season: "ינואר–מרץ",          habitat: "שדות פתוחים",        color: "אדום/לבן/סגול", desc: "[תיאור]" },
+    { id: 3,  emoji: "🌺", name: "רקפת מצויה",         latin: "Cyclamen persicum",          season: "ינואר–מרץ",          habitat: "יערות",              color: "ורוד",         desc: "[תיאור]" },
+    { id: 4,  emoji: "💜", name: "חרצית גדולה",        latin: "Centaurea hyalolepis",      season: "פברואר–אפריל",      habitat: "שדות",               color: "סגול",         desc: "[תיאור]" },
+    { id: 5,  emoji: "🌿", name: "נורית אסיה",         latin: "Ranunculus asiaticus",       season: "פברואר–אפריל",      habitat: "אחו",                color: "צהוב/כתום",   desc: "[תיאור]" },
+    { id: 6,  emoji: "🔵", name: "עין הפשתן",          latin: "Linum pubescens",            season: "מרץ–מאי",           habitat: "שדות",               color: "ורוד–כחלחל",  desc: "[תיאור]" },
+    { id: 7,  emoji: "🌻", name: "חמנייה ירושלמית",   latin: "Helianthus tuberosus",       season: "אוגוסט–ספטמבר",    habitat: "שוליים",             color: "צהוב",         desc: "[תיאור]" },
+    { id: 8,  emoji: "🌷", name: "לוטם שעיר",          latin: "Cistus creticus",            season: "מרץ–מאי",           habitat: "בתה מדיטרנית",       color: "ורוד",         desc: "[תיאור]" },
+    { id: 9,  emoji: "❤️", name: "פרג השדות",          latin: "Papaver rhoeas",             season: "פברואר–מאי",        habitat: "שדות תבואה",         color: "אדום",         desc: "[תיאור]" },
+    { id: 10, emoji: "🌷", name: "צבעוני ארץ ישראלי",  latin: "Tulipa systola",             season: "פברואר–מרץ",        habitat: "שדות בצפון",         color: "אדום–כתום",   desc: "[תיאור]" },
+    { id: 11, emoji: "💜", name: "מרווה ירושלמית",     latin: "Salvia hierosolymitana",     season: "מרץ–מאי",           habitat: "יערות אלון",         color: "סגול",         desc: "[תיאור]" },
+    { id: 12, emoji: "🔮", name: "גפנינית מכחילה",    latin: "Muscari comosum",            season: "מרץ–אפריל",         habitat: "שדות",               color: "סגול–כחול",   desc: "[תיאור]" },
+    { id: 13, emoji: "⚪", name: "חצב מצוי",           latin: "Urginea maritima",           season: "אוגוסט–ספטמבר",    habitat: "שיחיה ובתה",         color: "לבן",          desc: "[תיאור]" },
+    { id: 14, emoji: "🌟", name: "שושן הצחר",          latin: "Pancratium maritimum",       season: "יולי–ספטמבר",       habitat: "חוף הים",            color: "לבן",          desc: "[תיאור]" },
+    { id: 15, emoji: "🌸", name: "חלבלוב ישראלי",     latin: "Convolvulus althaeoides",    season: "מרץ–מאי",           habitat: "שדות",               color: "ורוד",         desc: "[תיאור]" },
+    { id: 16, emoji: "🌹", name: "ורד הכלב",           latin: "Rosa canina",                season: "אפריל–יוני",        habitat: "גדרות ויערות",       color: "ורוד–לבן",    desc: "[תיאור]" },
+    { id: 17, emoji: "🌼", name: "נרקיס מצוי",         latin: "Narcissus tazetta",          season: "דצמבר–פברואר",     habitat: "שדות צפון",          color: "לבן–צהוב",    desc: "[תיאור]" },
+    { id: 18, emoji: "🪻", name: "כרכום גילן",          latin: "Crocus aleppicus",           season: "ינואר–פברואר",      habitat: "גבעות",              color: "לילך",         desc: "[תיאור]" },
+  ];
+
+  function renderShop() {
+    const grid = document.getElementById('seeds-grid');
+    grid.innerHTML = seeds.map(s => `
+      <div class="seed-card" onclick="showProduct(${s.id})">
+        <div class="seed-card-img">${s.emoji}</div>
+        <div class="seed-card-body">
+          <h3>${s.name}</h3>
+          <p class="latin">${s.latin}</p>
+          <span class="tag">📅 ${s.season}</span>
+          <span class="tag">🌈 ${s.color}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function showProduct(id) {
+    const s = seeds.find(x => x.id === id);
+    document.getElementById('product-emoji').textContent = s.emoji;
+    document.getElementById('product-name').textContent = s.name;
+    document.getElementById('product-latin').textContent = s.latin;
+    document.getElementById('product-desc').textContent = s.desc;
+    document.getElementById('product-details').innerHTML = `
+      <li><span>עונת פריחה</span><span>${s.season}</span></li>
+      <li><span>בית גידול</span><span>${s.habitat}</span></li>
+      <li><span>צבע הפרח</span><span>${s.color}</span></li>
+      <li><span>מספר מין בסדרה</span><span>#${String(id).padStart(2,'0')}</span></li>
+    `;
+    showPage('product');
+  }
+
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + (name === 'product' ? 'shop' : name));
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  renderShop();
+
+  // ── Fixed-stage scroll typewriter ──
+  const sentences = [
+    "במשך שנים רבות, שמר הגן הבוטני בגבעת רם על פרחי הבר של ישראל.\nעכשיו גם אתם יכולים.",
+    "הגן הבוטני בגבעת רם יוצא בפרויקט הפצה של פרחי בר מקומיים, במטרה להשיב אותם אל הטבע של ישראל.",
+    "מעכשיו ניתן לרכוש ולגדל 24 מיני זרעי בר שנאספים, מנוקים ונארזים על ידי אנשים מקהילות שונות.",
+    "חלק מהמינים נדירים, חלקם אפילו מאוד, וחלקם על סף סכנת הכחדה (!).",
+    "כל הזרעים מגיעים מאיזור אגן הים התיכון ולכן מותאמים היטב לאקלים המקומי.",
+    "זאת גם הסיבה שהם קלים לגידול בארץ ומצמיחים פרחי בר חסכוניים במים, עמידים וכמובן — יפיפיים (ואנחנו אובייקטיבים!).",
+    "מוזמנים לשוטט באתר ולבחור את הפרח שלכם :)"
+  ];
+
+  const TYPE_END   = 0.55; // fraction of frame: typing done
+  const FADE_START = 0.72; // fraction: start fading
+
+  const tw         = document.getElementById('typewriter');
+  const shopBtn    = document.getElementById('btn-shop');
+  const scrollHint = document.getElementById('scroll-hint');
+  const seedEls = Array.from(document.querySelectorAll('.seed-p'));
+  let lastChars   = -1;
+  let lastOpacity = -1;
+  let ticking     = false;
+
+  // "במשך שנים רבות" — pre-typed at load
+  const PRE_TYPED = "במשך שנים רבות";
+
+  function getFrameH() { return window.innerHeight * 1.6; }
+
+  function render() {
+    const scrollY  = window.scrollY;
+    const FRAME_H  = getFrameH();
+    const total    = sentences.length;
+
+    // hide scroll hint once user starts scrolling
+    if (scrollY > 10) {
+      scrollHint.classList.add('hidden');
+    } else {
+      scrollHint.classList.remove('hidden');
+    }
+
+    const rawFrame = scrollY / FRAME_H;
+    const frameIdx = Math.min(total - 1, Math.floor(rawFrame));
+    const progress = frameIdx < total - 1
+      ? Math.min(1, rawFrame - frameIdx)
+      : Math.min(1, (scrollY - frameIdx * FRAME_H) / (FRAME_H * TYPE_END));
+
+    const text   = sentences[frameIdx];
+    const isLast = frameIdx === total - 1;
+
+    // for frame 0: start from PRE_TYPED length, type the rest via scroll
+    let chars;
+    if (frameIdx === 0) {
+      const preLen  = PRE_TYPED.length;
+      const typeP   = Math.min(1, progress / TYPE_END);
+      const scrolled = Math.floor(typeP * (text.length - preLen));
+      chars = preLen + scrolled;
+    } else {
+      const typeP = isLast ? Math.min(1, progress) : Math.min(1, progress / TYPE_END);
+      chars = Math.floor(typeP * text.length);
+    }
+
+    // opacity
+    let opacity;
+    if (isLast) {
+      opacity = 1;
+    } else {
+      const fadeP = Math.max(0, (progress - FADE_START) / (1 - FADE_START));
+      opacity = 1 - fadeP;
+    }
+
+    if (chars !== lastChars) {
+      lastChars = chars;
+      let shown = text.slice(0, chars);
+
+      // wrap "הפצה" in a span so we can find its screen position
+      if (frameIdx === 1 && chars > HIFTZE_START) {
+        const end = Math.min(chars, HIFTZE_END);
+        shown = shown.slice(0, HIFTZE_START)
+          + `<span id="hiftze-span">${shown.slice(HIFTZE_START, end)}</span>`
+          + shown.slice(end);
+      }
+
+      shown = shown.replace(/\n/g, '<br>');
+      const done = chars >= text.length;
+      tw.innerHTML = shown + (done ? '' : '<span class="cursor"></span>');
+    }
+
+    if (opacity !== lastOpacity) {
+      lastOpacity = opacity;
+      tw.style.opacity = opacity;
+    }
+
+    if (isLast && chars >= text.length) {
+      shopBtn.classList.add('visible');
+    } else {
+      shopBtn.classList.remove('visible');
+    }
+
+    // ── זרעים מתעופפים בפריים 2 ──
+    animateSeeds(frameIdx, progress, chars);
+
+    // ── מלבנים בפריים 3 ──
+    animateCards(frameIdx, progress, opacity, chars);
+  }
+
+  // index of ה in "הפצה" within sentence[1]
+  const HIFTZE_START = sentences[1].indexOf('הפצה');
+  const HIFTZE_END   = HIFTZE_START + 4;
+
+  const SEED_CONFIGS = [
+    { angle: 180, dist: 1400, sway:  8, freq: 2.6, delay: 0.00, spin:  280, size: 28 },
+    { angle: 178, dist: 1350, sway:  6, freq: 3.2, delay: 0.04, spin: -320, size: 22 },
+    { angle: 182, dist: 1500, sway: 10, freq: 2.0, delay: 0.08, spin:  360, size: 18 },
+    { angle: 176, dist: 1420, sway:  7, freq: 2.9, delay: 0.03, spin: -260, size: 26 },
+    { angle: 183, dist: 1300, sway:  9, freq: 3.5, delay: 0.06, spin:  400, size: 16 },
+    { angle: 179, dist: 1380, sway:  5, freq: 2.3, delay: 0.10, spin: -300, size: 20 },
+    { angle: 181, dist: 1460, sway: 11, freq: 3.0, delay: 0.02, spin:  340, size: 14 },
+    { angle: 177, dist: 1320, sway:  8, freq: 2.7, delay: 0.07, spin: -380, size: 24 },
+    { angle: 184, dist: 1550, sway:  6, freq: 3.3, delay: 0.05, spin:  260, size: 15 },
+    { angle: 178, dist: 1250, sway: 10, freq: 2.1, delay: 0.12, spin: -310, size: 20 },
+    { angle: 181, dist: 1480, sway:  7, freq: 3.8, delay: 0.09, spin:  420, size: 12 },
+    { angle: 179, dist: 1360, sway:  9, freq: 2.5, delay: 0.01, spin: -270, size: 26 },
+    { angle: 182, dist: 1420, sway:  6, freq: 3.1, delay: 0.11, spin:  350, size: 18 },
+    { angle: 180, dist: 1300, sway:  8, freq: 2.8, delay: 0.06, spin: -290, size: 14 },
+    { angle: 177, dist: 1500, sway:  7, freq: 3.6, delay: 0.13, spin:  380, size: 11 },
+  ];
+
+  let seedOrigin = null; // {x, y} in viewport coords
+
+  function animateSeeds(frameIdx, progress, chars) {
+    if (frameIdx !== 1) {
+      seedEls.forEach(s => { s.style.opacity = 0; });
+      seedOrigin = null;
+      return;
+    }
+
+    // capture origin when "הפצה" first appears
+    if (chars >= HIFTZE_START) {
+      const span = document.getElementById('hiftze-span');
+      if (span) {
+        const r = span.getBoundingClientRect();
+        seedOrigin = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+      }
+    }
+
+    if (!seedOrigin) {
+      seedEls.forEach(s => { s.style.opacity = 0; });
+      return;
+    }
+
+    // local progress from when הפצה starts typing
+    const triggerP = (HIFTZE_START / sentences[1].length) * TYPE_END;
+    const localP   = Math.max(0, (progress - triggerP) / (1 - triggerP));
+
+    SEED_CONFIGS.forEach((cfg, i) => {
+      const el = seedEls[i];
+      const p  = Math.max(0, localP - cfg.delay);
+
+      if (p <= 0) { el.style.opacity = 0; return; }
+
+      // trajectory
+      const rad   = (cfg.angle * Math.PI) / 180;
+      const eased = 1 - Math.pow(1 - p, 1.6); // ease-out
+      const dist  = eased * cfg.dist;
+      const baseX = seedOrigin.x + Math.cos(rad) * dist - 23;
+      const baseY = seedOrigin.y + Math.sin(rad) * dist - 23;
+
+      // wind sway
+      const swayX = Math.sin(p * Math.PI * cfg.freq) * cfg.sway;
+      const swayY = Math.cos(p * Math.PI * cfg.freq * 0.7) * cfg.sway * 0.5;
+
+      const x = baseX + swayX;
+      const y = baseY + swayY;
+
+      // fade out only once fully off the left edge
+      const offScreen = Math.max(0, -(x + 46)) / 60;
+      el.style.opacity = Math.max(0, 1 - offScreen);
+
+      const angle = p * cfg.spin;
+      el.style.width     = cfg.size + 'px';
+      el.style.left      = x + 'px';
+      el.style.top       = y + 'px';
+      el.style.transform = `rotate(${angle}deg)`;
+    });
+  }
+
+  const cardsEl   = document.getElementById('cards-frame3');
+  const cardEls   = Array.from(cardsEl.querySelectorAll('.card-rect'));
+
+  const CARD_COLORS = ['#FFF22D','#FFCE00','#00CCF0','#CFFF10','#93EDEB','#F7559D','#FFC5EE'];
+  cardEls.forEach(c => {
+    c.style.background = CARD_COLORS[Math.floor(Math.random() * CARD_COLORS.length)];
+  });
+
+  // pick 3 random cards for "נדיר" label
+  const nidirIndices = [];
+  while (nidirIndices.length < 3) {
+    const r = Math.floor(Math.random() * 24);
+    if (!nidirIndices.includes(r)) nidirIndices.push(r);
+  }
+  const nidirLabels = nidirIndices.map(i => {
+    const wrap = document.createElement('div');
+    wrap.className = 'card-label';
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 100 52');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    // slightly imperfect hand-drawn oval
+    path.setAttribute('d', 'M50,4 C72,2 96,11 97,26 C98,41 74,49 50,48 C26,49 2,41 3,26 C2,11 28,2 50,4 Z');
+    svg.appendChild(path);
+
+    const txt = document.createElement('span');
+    txt.textContent = 'נדיר';
+    wrap.appendChild(svg);
+    wrap.appendChild(txt);
+    cardEls[i].appendChild(wrap);
+    return wrap;
+  });
+
+  // cards appear after "24" is fully typed in frame 2
+  const CARDS_TRIGGER_CHAR = sentences[2].indexOf('24') + 2;
+  const CARDS_TRIGGER_P    = (CARDS_TRIGGER_CHAR / sentences[2].length) * TYPE_END;
+
+  const NDIRIM_CHAR = sentences[3].indexOf('נדירים'); // 12
+
+  function animateCards(frameIdx, progress, opacity, chars) {
+    // visible in frame 2 (after "24" typed) and all of frame 3; fade with frame 3
+    if (frameIdx === 2) {
+      cardsEl.style.opacity = 1;
+      const localP = Math.max(0, (progress - CARDS_TRIGGER_P) / (TYPE_END - CARDS_TRIGGER_P));
+      cardEls.forEach((c, i) => {
+        c.style.opacity = localP > i / 24 ? 1 : 0;
+      });
+      nidirLabels.forEach(l => l.classList.remove('visible'));
+    } else if (frameIdx === 3) {
+      cardsEl.style.opacity = opacity;
+      cardEls.forEach(c => { c.style.opacity = 1; });
+      const showNdirim = chars >= NDIRIM_CHAR;
+      nidirLabels.forEach(l => {
+        if (showNdirim && !l.classList.contains('visible')) {
+          // restart animation by removing class, forcing reflow, re-adding
+          l.classList.remove('visible');
+          void l.offsetWidth;
+          l.classList.add('visible');
+        } else if (!showNdirim) {
+          l.classList.remove('visible');
+        }
+      });
+    } else {
+      cardsEl.style.opacity = 0;
+      nidirLabels.forEach(l => l.classList.remove('visible'));
+    }
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { render(); ticking = false; });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  render();
+</script>
+</body>
+</html>
