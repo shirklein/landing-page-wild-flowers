@@ -36,7 +36,7 @@
       padding: 0 2rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       height: 64px;
       position: sticky;
       top: 0;
@@ -89,7 +89,7 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       padding: 0.35rem 1rem;
-      border-radius: 2rem;
+      border-radius: 0;
       margin-bottom: 1.5rem;
     }
 
@@ -115,7 +115,7 @@
       padding: 0.85rem 2.5rem;
       font-family: 'Narkiss Yair Variable', serif;
       font-size: 1rem;
-      border-radius: 4px;
+      border-radius: 0;
       cursor: pointer;
       letter-spacing: 0.05em;
       transition: background 0.2s, transform 0.1s;
@@ -158,7 +158,7 @@
     .value-card {
       background: #fff;
       border: 1px solid var(--sand);
-      border-radius: 8px;
+      border-radius: 0;
       padding: 1.5rem;
       text-align: center;
     }
@@ -179,57 +179,95 @@
     .shop-header p { font-size: 1rem; opacity: 0.8; }
 
     .seeds-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.5rem;
-      max-width: 1100px;
-      margin: 3rem auto;
-      padding: 0 2rem;
+      display: table;
+      width: 100%;
+      border-top: 2px solid #360EA7;
+      border-collapse: collapse;
     }
 
     .seed-card {
-      background: #fff;
-      border: 1px solid var(--sand);
-      border-radius: 10px;
-      overflow: hidden;
+      display: table-row;
       cursor: pointer;
-      transition: box-shadow 0.2s, transform 0.15s;
     }
 
-    .seed-card:hover {
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      transform: translateY(-3px);
+    .seed-card:hover > * { background: #f0ece6; }
+    .seed-card.hover-yellow:hover > * { background: #CFFF10; }
+    .seed-card.hover-yellow2:hover > * { background: #FFF22D; }
+    .seed-card.hover-pink:hover > * { background: #FFC5EE; }
+    .seed-card.hover-teal:hover > * { background: #93EDEB; }
+    .seed-card.hover-orange:hover > * { background: #FFB400; }
+    .seed-card.hover-magenta:hover > * { background: #F7559D; }
+    .seed-card.hover-cyan:hover > * { background: #00CCF0; }
+
+    .seed-card > * {
+      display: table-cell;
+      vertical-align: middle;
+      padding: 1rem 1.5rem;
+      border-bottom: 2px solid #360EA7;
     }
 
-    .seed-card-img {
-      width: 100%;
-      height: 160px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      background: var(--cream);
+    .seed-card-name-col {
+      text-align: right;
+      padding-right: 3rem;
+      white-space: nowrap;
     }
 
-    .seed-card-body { padding: 1rem; }
-    .seed-card-body h3 { font-size: 1rem; color: var(--dark-sage); margin-bottom: 0.25rem; }
-    .seed-card-body .latin { font-style: italic; font-size: 0.8rem; color: var(--light-text); }
-    .seed-card-body .tag {
-      display: inline-block;
-      margin-top: 0.5rem;
-      background: var(--cream);
-      border: 1px solid var(--sand);
-      font-size: 0.72rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 2rem;
-      color: var(--sage);
+    .seed-card-name {
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-weight: 400;
+      color: #360EA7;
+      line-height: 1.2;
+      display: inline;
+    }
+
+    .seed-card-name-row { display: contents; }
+
+    .seed-card .latin {
+      font-style: italic;
+      font-size: clamp(0.75rem, 1.2vw, 1rem);
+      color: #360EA7;
+      text-align: right;
+      width: 99%;
+    }
+
+    .seed-card .tag {
+      font-size: 0.8rem;
+      color: #360EA7;
+      white-space: nowrap;
+    }
+
+    .seed-card .tag.rarity {
+      font-weight: 600;
+      opacity: 0.7;
+      font-size: 0.78rem;
+      vertical-align: middle;
+      padding-right: 0.5rem;
+    }
+
+    .seed-card .tag.price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: left;
+      padding-left: 3rem;
+      white-space: nowrap;
     }
 
     /* ── עמוד מוצר ── */
-    .product-back {
-      padding: 1.5rem 2rem 0;
-      max-width: 900px;
-      margin: 0 auto;
+    .product-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 64px);
+    }
+
+    .product-left {
+      background: #fff;
+    }
+
+    .product-right {
+      padding: 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
     }
 
     .product-back button {
@@ -238,61 +276,44 @@
       color: var(--sage);
       font-family: 'Narkiss Yair Variable', serif;
       padding: 0.4rem 1rem;
-      border-radius: 4px;
+      border-radius: 0;
       cursor: pointer;
       font-size: 0.9rem;
     }
 
-    .product-layout {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 3rem;
-      max-width: 900px;
-      margin: 2rem auto 5rem;
-      padding: 0 2rem;
-    }
-
-    @media (max-width: 640px) {
-      .product-layout { grid-template-columns: 1fr; }
-    }
-
-    .product-visual {
-      background: #fff;
-      border: 1px solid var(--sand);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8rem;
-      aspect-ratio: 1;
-    }
-
-    .product-info h1 { font-size: 1.8rem; color: var(--dark-sage); margin-bottom: 0.25rem; }
-    .product-info .latin { font-style: italic; color: var(--light-text); margin-bottom: 1.5rem; }
-
-    .product-info p {
-      line-height: 1.85;
-      color: var(--light-text);
-      margin-bottom: 1.5rem;
+    .product-latin-top {
+      font-style: italic;
       font-size: 1rem;
+      color: var(--sage);
+      margin-bottom: -0.5rem;
+    }
+
+    #product-name {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      color: var(--sage);
+      line-height: 1.1;
     }
 
     .details-list {
       list-style: none;
-      border: 1px solid var(--sand);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
+      border-top: 1px solid var(--sage);
+      margin-bottom: 1rem;
     }
 
     .details-list li {
       display: flex;
       justify-content: space-between;
-      padding: 0.65rem 1rem;
-      font-size: 0.9rem;
+      padding: 0.65rem 0;
+      font-size: 0.95rem;
+      border-bottom: 1px solid var(--sage);
     }
 
-    .details-list li:not(:last-child) { border-bottom: 1px solid var(--sand); }
+    .details-list li span:first-child {
+      font-weight: 600;
+    }
+
+    .details-list li:not(:last-child) { border-bottom: 1px solid #360EA7; }
     .details-list li span:first-child { color: var(--light-text); }
     .details-list li span:last-child { font-weight: bold; color: var(--text); }
 
@@ -322,6 +343,32 @@
       justify-content: flex-start;
       padding: 0 5vw 2rem;
       pointer-events: none;
+    }
+
+    #frame-dots {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .frame-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: 1.5px solid #360EA7;
+      background: transparent;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .frame-dot.active {
+      background: #360EA7;
+      transform: scale(1.4);
     }
 
     #scroll-hint {
@@ -354,7 +401,7 @@
     }
 
     .frame-text {
-      font-size: clamp(1.6rem, 4vw, 3rem);
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
       color: var(--text);
       text-align: right;
       width: 100%;
@@ -408,16 +455,21 @@
       opacity: 0;
     }
     .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      gap: 1vw;
+      position: relative;
       width: 42vw;
     }
     .card-rect {
-      aspect-ratio: 8 / 14;
+      position: absolute;
       opacity: 0;
-      position: relative;
+      will-change: left, top, width, height, clip-path;
+    }
+    .card-rect.morphing {
+      transition:
+        left 1s cubic-bezier(0.4,0,0.2,1),
+        top 1s cubic-bezier(0.4,0,0.2,1),
+        width 1s cubic-bezier(0.4,0,0.2,1),
+        height 1s cubic-bezier(0.4,0,0.2,1),
+        clip-path 1s cubic-bezier(0.4,0,0.2,1);
     }
     .card-label {
       position: absolute;
@@ -479,7 +531,7 @@
       padding: 0.85rem 2.5rem;
       font-family: 'Narkiss Yair Variable', serif;
       font-size: 1rem;
-      border-radius: 4px;
+      border-radius: 0;
       cursor: pointer;
       letter-spacing: 0.05em;
       margin-top: 2rem;
@@ -502,12 +554,14 @@
 <body>
 
 <nav>
-  <span class="nav-logo" onclick="showPage('home')">🌿 פרחי הבר</span>
+  <span class="nav-logo" onclick="showPage('home')"></span>
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">בית</a></li>
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">אודות</a></li>
     <li><a href="#" onclick="showPage('shop')" id="nav-shop">חנות הזרעים</a></li>
   </ul>
 </nav>
+
+<img src="Asset 1 2 copy.svg" id="fixed-logo" style="position:fixed;bottom:2rem;left:2rem;z-index:1000;width:clamp(30px,4vw,60px);pointer-events:none;">
 
 <!-- ── עמוד הבית ── -->
 <div id="page-home" class="page active">
@@ -519,6 +573,15 @@
     <p class="frame-text" id="typewriter"></p>
     <button class="btn-shop" id="btn-shop" onclick="showPage('shop')">לחנות הזרעים ←</button>
   </div>
+  <div id="frame-dots">
+    <div class="frame-dot" data-idx="0"></div>
+    <div class="frame-dot" data-idx="1"></div>
+    <div class="frame-dot" data-idx="2"></div>
+    <div class="frame-dot" data-idx="3"></div>
+    <div class="frame-dot" data-idx="4"></div>
+    <div class="frame-dot" data-idx="5"></div>
+    <div class="frame-dot" data-idx="6"></div>
+  </div>
   <div id="scroll-hint">
     <span>גללו למטה</span>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -529,81 +592,82 @@
 
 <!-- ── חנות הזרעים ── -->
 <div id="page-shop" class="page">
-  <div class="shop-header">
-    <h1>חנות הזרעים</h1>
-    <p>18 מינים — בחרי את פרחי הבר שלך</p>
-  </div>
   <div class="seeds-grid" id="seeds-grid"></div>
 </div>
 
 <!-- ── עמוד מוצר ── -->
 <div id="page-product" class="page">
-  <div class="product-back">
-    <button onclick="showPage('shop')">← חזרה לחנות</button>
-  </div>
-  <div class="product-layout">
-    <div class="product-visual" id="product-emoji"></div>
-    <div class="product-info">
+  <div class="product-split">
+    <div class="product-right" id="product-right">
+      <div class="product-back">
+        <button onclick="showPage('shop')">→ חזרה לחנות</button>
+      </div>
+      <p class="product-latin-top" id="product-latin"></p>
       <h1 id="product-name"></h1>
-      <p class="latin" id="product-latin"></p>
-      <p id="product-desc"></p>
       <ul class="details-list" id="product-details"></ul>
-      <button class="btn-primary">הוסיפי לסל 🛒</button>
+      <button class="btn-primary">הוסיפי לסל</button>
     </div>
+    <div class="product-left" id="product-left"></div>
   </div>
 </div>
 
-<footer>
-  © 2025 פרחי הבר · עיצוב ואיסוף זרעים מהטבע הישראלי
-</footer>
 
 <script>
   const seeds = [
-    { id: 1,  emoji: "🌼", name: "חמציץ שעיר",        latin: "Oxalis hirsuta",           season: "חורף–אביב",         habitat: "שדות",               color: "צהוב",         desc: "[תיאור קצר של הצמח, מאפיינים, ולב הסיפור שלו בנוף הישראלי]" },
-    { id: 2,  emoji: "🌸", name: "כלנית מצויה",        latin: "Anemone coronaria",         season: "ינואר–מרץ",          habitat: "שדות פתוחים",        color: "אדום/לבן/סגול", desc: "[תיאור]" },
-    { id: 3,  emoji: "🌺", name: "רקפת מצויה",         latin: "Cyclamen persicum",          season: "ינואר–מרץ",          habitat: "יערות",              color: "ורוד",         desc: "[תיאור]" },
-    { id: 4,  emoji: "💜", name: "חרצית גדולה",        latin: "Centaurea hyalolepis",      season: "פברואר–אפריל",      habitat: "שדות",               color: "סגול",         desc: "[תיאור]" },
-    { id: 5,  emoji: "🌿", name: "נורית אסיה",         latin: "Ranunculus asiaticus",       season: "פברואר–אפריל",      habitat: "אחו",                color: "צהוב/כתום",   desc: "[תיאור]" },
-    { id: 6,  emoji: "🔵", name: "עין הפשתן",          latin: "Linum pubescens",            season: "מרץ–מאי",           habitat: "שדות",               color: "ורוד–כחלחל",  desc: "[תיאור]" },
-    { id: 7,  emoji: "🌻", name: "חמנייה ירושלמית",   latin: "Helianthus tuberosus",       season: "אוגוסט–ספטמבר",    habitat: "שוליים",             color: "צהוב",         desc: "[תיאור]" },
-    { id: 8,  emoji: "🌷", name: "לוטם שעיר",          latin: "Cistus creticus",            season: "מרץ–מאי",           habitat: "בתה מדיטרנית",       color: "ורוד",         desc: "[תיאור]" },
-    { id: 9,  emoji: "❤️", name: "פרג השדות",          latin: "Papaver rhoeas",             season: "פברואר–מאי",        habitat: "שדות תבואה",         color: "אדום",         desc: "[תיאור]" },
-    { id: 10, emoji: "🌷", name: "צבעוני ארץ ישראלי",  latin: "Tulipa systola",             season: "פברואר–מרץ",        habitat: "שדות בצפון",         color: "אדום–כתום",   desc: "[תיאור]" },
-    { id: 11, emoji: "💜", name: "מרווה ירושלמית",     latin: "Salvia hierosolymitana",     season: "מרץ–מאי",           habitat: "יערות אלון",         color: "סגול",         desc: "[תיאור]" },
-    { id: 12, emoji: "🔮", name: "גפנינית מכחילה",    latin: "Muscari comosum",            season: "מרץ–אפריל",         habitat: "שדות",               color: "סגול–כחול",   desc: "[תיאור]" },
-    { id: 13, emoji: "⚪", name: "חצב מצוי",           latin: "Urginea maritima",           season: "אוגוסט–ספטמבר",    habitat: "שיחיה ובתה",         color: "לבן",          desc: "[תיאור]" },
-    { id: 14, emoji: "🌟", name: "שושן הצחר",          latin: "Pancratium maritimum",       season: "יולי–ספטמבר",       habitat: "חוף הים",            color: "לבן",          desc: "[תיאור]" },
-    { id: 15, emoji: "🌸", name: "חלבלוב ישראלי",     latin: "Convolvulus althaeoides",    season: "מרץ–מאי",           habitat: "שדות",               color: "ורוד",         desc: "[תיאור]" },
-    { id: 16, emoji: "🌹", name: "ורד הכלב",           latin: "Rosa canina",                season: "אפריל–יוני",        habitat: "גדרות ויערות",       color: "ורוד–לבן",    desc: "[תיאור]" },
-    { id: 17, emoji: "🌼", name: "נרקיס מצוי",         latin: "Narcissus tazetta",          season: "דצמבר–פברואר",     habitat: "שדות צפון",          color: "לבן–צהוב",    desc: "[תיאור]" },
-    { id: 18, emoji: "🪻", name: "כרכום גילן",          latin: "Crocus aleppicus",           season: "ינואר–פברואר",      habitat: "גבעות",              color: "לילך",         desc: "[תיאור]" },
+    { id: 1,  name: "דּוֹנַגִּית אֶרֶץ־יִשְׂרְאֵלִית", hoverClass: "hover-yellow", latin: "Cerinthe palaestina",          rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 2,  name: "דַּרְדַּר כָּחֹל",                hoverClass: "hover-pink", latin: "Centaurea cyanoides",          rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 3,  name: "זַעְזוּעִית גְּדוֹלָה",           hoverClass: "hover-orange", latin: "Briza maxima",                 rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
+    { id: 4,  name: "טֹפַח סְפָרַדִּי",               hoverClass: "hover-yellow2", latin: "Lathyrus clymenum",            rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 5,  name: "מַרְוָה דְּגוּלָה",              hoverClass: "hover-yellow", latin: "Salvia viridis",               rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 6,  name: "מַרְוָה כְּחֻלָּה",              hoverClass: "hover-yellow", latin: "Salvia indica",                rarity: "נדיר מאוד", price: 26, season: "", habitat: "", color: "", desc: "" },
+    { id: 7,  name: "מַרְוַת יְרוּשָׁלַיִם",         hoverClass: "hover-yellow2", latin: "Salvia hierosolymitana Boiss", rarity: "",           price: 18, season: "", habitat: "", color: "", desc: "" },
+    { id: 8,  name: "מִישׁוֹיָה פַּעֲמוֹנִית",        hoverClass: "hover-magenta", latin: "Michauxia campanuloides",      rarity: "נדיר מאוד", price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 9,  name: "פְּרֵגָה צְהֻבָּה",             hoverClass: "hover-cyan", latin: "Glaucium flavum",              rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 10, name: "פֶּרֶג אַגָּסִי",                hoverClass: "hover-yellow2", latin: "Salvia indica",                rarity: "",           price: 19, season: "", habitat: "", color: "", desc: "" },
+    { id: 11, name: "פִּשְׁתָּנִית מְשֻׁלֶּשֶׁת",     hoverClass: "hover-magenta", latin: "Linaria triphylla",            rarity: "סכנת הכחדה", price: 32, season: "", habitat: "", color: "", desc: "" },
+    { id: 12, name: "צַמְרוּרַת בּוּאֶסִיָּה",        latin: "Trichodesma boissieri Post",   rarity: "נדיר",       price: 35, season: "", habitat: "", color: "", desc: "" },
+    { id: 13, name: "צִפַּרְנִית דַּמַּשְׂקָאִית",    hoverClass: "hover-teal", latin: "Silene damascena",             rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 14, name: "צִפַּרְנִית גְּדוֹלָה",          latin: "Silene swertiifolia Boiss",    rarity: "נדיר",       price: 24, season: "", habitat: "", color: "", desc: "" },
+    { id: 15, name: "עַדְעַד כָּחֹל",                 hoverClass: "hover-orange", latin: "Limonium sinuatum",            rarity: "",           price: 18, season: "", habitat: "", color: "", desc: "" },
+    { id: 16, name: "קַחְוַן הַצַּבָּעִים",         hoverClass: "hover-teal", latin: "Anthemis tinctoria",           rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 17, name: "תִּלְתָּן הָאַרְגָּמָן",          hoverClass: "hover-yellow", latin: "Trifolium purpureum",          rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
+    { id: 18, name: "תִּלְתָּן תְּרִיסָנִי",           latin: "Trifolium clypeatum",          rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 19, name: "תֻּרְמוּס הֶהָרִים",              hoverClass: "hover-pink", latin: "Lupinus pilosus",              rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
   ];
 
   function renderShop() {
     const grid = document.getElementById('seeds-grid');
     grid.innerHTML = seeds.map(s => `
-      <div class="seed-card" onclick="showProduct(${s.id})">
-        <div class="seed-card-img">${s.emoji}</div>
-        <div class="seed-card-body">
-          <h3>${s.name}</h3>
-          <p class="latin">${s.latin}</p>
-          <span class="tag">📅 ${s.season}</span>
-          <span class="tag">🌈 ${s.color}</span>
+      <div class="seed-card${s.hoverClass ? ' ' + s.hoverClass : ''}" onclick="showProduct(${s.id})">
+        <div class="seed-card-name-col">
+          <div class="seed-card-name">${s.name}</div>
+          ${s.rarity ? `<span class="tag rarity">${s.rarity}</span>` : ''}
         </div>
+        <p class="latin">${s.latin}</p>
+        <span class="tag price">${s.price}₪</span>
       </div>
     `).join('');
   }
 
+  const hoverColors = {
+    'hover-yellow':  '#CFFF10',
+    'hover-yellow2': '#FFF22D',
+    'hover-pink':    '#FFC5EE',
+    'hover-teal':    '#93EDEB',
+    'hover-orange':  '#FFB400',
+    'hover-magenta': '#F7559D',
+    'hover-cyan':    '#00CCF0',
+  };
+
   function showProduct(id) {
     const s = seeds.find(x => x.id === id);
-    document.getElementById('product-emoji').textContent = s.emoji;
+    const bg = hoverColors[s.hoverClass] || '#f0ece6';
+    document.getElementById('product-right').style.background = bg;
     document.getElementById('product-name').textContent = s.name;
     document.getElementById('product-latin').textContent = s.latin;
-    document.getElementById('product-desc').textContent = s.desc;
     document.getElementById('product-details').innerHTML = `
-      <li><span>עונת פריחה</span><span>${s.season}</span></li>
-      <li><span>בית גידול</span><span>${s.habitat}</span></li>
-      <li><span>צבע הפרח</span><span>${s.color}</span></li>
+      ${s.rarity ? `<li><span>נדירות</span><span>${s.rarity}</span></li>` : ''}
+      <li><span>מחיר</span><span>${s.price}₪</span></li>
       <li><span>מספר מין בסדרה</span><span>#${String(id).padStart(2,'0')}</span></li>
     `;
     showPage('product');
@@ -615,6 +679,7 @@
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     const navEl = document.getElementById('nav-' + (name === 'product' ? 'shop' : name));
     if (navEl) navEl.classList.add('active');
+    document.getElementById('frame-dots').style.display = name === 'home' ? '' : 'none';
     window.scrollTo(0, 0);
   }
 
@@ -622,8 +687,8 @@
 
   // ── Fixed-stage scroll typewriter ──
   const sentences = [
-    "במשך שנים רבות, שמר הגן הבוטני בגבעת רם על פרחי הבר של ישראל.\nעכשיו גם אתם יכולים.",
-    "הגן הבוטני בגבעת רם יוצא בפרויקט הפצה של פרחי בר מקומיים, במטרה להשיב אותם אל הטבע של ישראל.",
+    "במשך שנים רבות, שמר הגן הבוטני בגבעת רם על פרחי הבר של ישראל.\n<span style=\"font-size:2em;line-height:1.2\">עכשיו, גם אתם יכולים.</span>",
+    "הגן הבוטני יוצא בפרויקט הפצה של פרחי בר מקומיים, במטרה להשיב אותם אל הטבע של ישראל.",
     "מעכשיו ניתן לרכוש ולגדל 24 מיני זרעי בר שנאספים, מנוקים ונארזים על ידי אנשים מקהילות שונות.",
     "חלק מהמינים נדירים, חלקם אפילו מאוד, וחלקם על סף סכנת הכחדה (!).",
     "כל הזרעים מגיעים מאיזור אגן הים התיכון ולכן מותאמים היטב לאקלים המקומי.",
@@ -638,8 +703,10 @@
   const shopBtn    = document.getElementById('btn-shop');
   const scrollHint = document.getElementById('scroll-hint');
   const seedEls = Array.from(document.querySelectorAll('.seed-p'));
+  const frameDots  = Array.from(document.querySelectorAll('.frame-dot'));
   let lastChars   = -1;
   let lastOpacity = -1;
+  let lastDotIdx  = -1;
   let ticking     = false;
 
   // "במשך שנים רבות" — pre-typed at load
@@ -661,6 +728,11 @@
 
     const rawFrame = scrollY / FRAME_H;
     const frameIdx = Math.min(total - 1, Math.floor(rawFrame));
+
+    if (frameIdx !== lastDotIdx) {
+      lastDotIdx = frameIdx;
+      frameDots.forEach((d, i) => d.classList.toggle('active', i === frameIdx));
+    }
     const progress = frameIdx < total - 1
       ? Math.min(1, rawFrame - frameIdx)
       : Math.min(1, (scrollY - frameIdx * FRAME_H) / (FRAME_H * TYPE_END));
@@ -806,6 +878,7 @@
   }
 
   const cardsEl   = document.getElementById('cards-frame3');
+  const cardsGrid = cardsEl.querySelector('.cards-grid');
   const cardEls   = Array.from(cardsEl.querySelectorAll('.card-rect'));
 
   const FIXED_COLORS = [
@@ -839,6 +912,139 @@
     return { wrap, order };
   });
 
+  // ── Globe morph helpers ──────────────────────────────────────────────────────
+  const GLOBE_R_VW = 15;   // sphere radius in vw
+  const COLS = 6, ROWS = 4;
+  const EDGE_N = 5;        // polygon points per edge (→ 20 total, matching both states)
+
+  // 20-point rectangle clip-path polygon for grid state
+  function rectClipPath() {
+    const pts = [];
+    for (let i=0; i<EDGE_N; i++) pts.push(`${(i/EDGE_N*100).toFixed(1)}% 0%`);
+    for (let i=0; i<EDGE_N; i++) pts.push(`100% ${(i/EDGE_N*100).toFixed(1)}%`);
+    for (let i=0; i<EDGE_N; i++) pts.push(`${((1-i/EDGE_N)*100).toFixed(1)}% 100%`);
+    for (let i=0; i<EDGE_N; i++) pts.push(`0% ${((1-i/EDGE_N)*100).toFixed(1)}%`);
+    return `polygon(${pts.join(',')})`;
+  }
+
+  const RECT_CLIP = rectClipPath();
+
+  function computeGridPositions() {
+    const gap  = window.innerWidth * 0.01;
+    const W    = window.innerWidth * 0.42;
+    const cardW = (W - (COLS-1)*gap) / COLS;
+    const cardH = cardW * 14/8;
+    const h     = ROWS*cardH + (ROWS-1)*gap;
+    cardsGrid.style.height = h + 'px';
+    const pos = [];
+    for (let r=0; r<ROWS; r++)
+      for (let c=0; c<COLS; c++)
+        pos.push({ left: c*(cardW+gap), top: r*(cardH+gap), width: cardW, height: cardH });
+    return pos;
+  }
+
+  function computeGlobePositions() {
+    const vw  = window.innerWidth / 100;
+    const R   = GLOBE_R_VW * vw;
+    const W   = window.innerWidth * 0.42;
+    const H   = parseFloat(cardsGrid.style.height) || window.innerWidth * 0.46;
+    const cx  = W/2, cy = H/2;
+
+    // lat/lon grid — show full front hemisphere
+    const phiEdges = [], lamEdges = [];
+    for (let i=0; i<=ROWS; i++) phiEdges.push(-Math.PI/2 + Math.PI*i/ROWS);
+    for (let i=0; i<=COLS; i++) lamEdges.push(-Math.PI/2 + Math.PI*i/COLS);
+
+    // gap in radians ≈ 1vw / R (matching grid gap)
+    const GAP = vw / R * 0.5;
+
+    function xy(phi, lam) {
+      return { x: R*Math.cos(phi)*Math.sin(lam), y: -R*Math.sin(phi) };
+    }
+
+    const pos = [];
+    for (let r=0; r<ROWS; r++) {
+      for (let c=0; c<COLS; c++) {
+        const phi1 = phiEdges[r]   + GAP;
+        const phi2 = phiEdges[r+1] - GAP;
+        const lam1 = lamEdges[c]   + GAP;
+        const lam2 = lamEdges[c+1] - GAP;
+
+        // bounding box via dense sampling
+        const xs=[], ys=[];
+        const S=16;
+        for (let i=0;i<=S;i++) {
+          const t=i/S;
+          [xy(phi1,lam1+t*(lam2-lam1)), xy(phi2,lam1+t*(lam2-lam1))].forEach(p=>{xs.push(p.x);ys.push(p.y);});
+          [xy(phi1+t*(phi2-phi1),lam1), xy(phi1+t*(phi2-phi1),lam2)].forEach(p=>{xs.push(p.x);ys.push(p.y);});
+        }
+        const xMin=Math.min(...xs), xMax=Math.max(...xs);
+        const yMin=Math.min(...ys), yMax=Math.max(...ys);
+        const bw=xMax-xMin, bh=yMax-yMin;
+
+        // 20-point clip-path: 5 pts per edge, no repeated corners
+        function pct(p) {
+          const px = ((p.x-xMin)/bw*100).toFixed(2);
+          const py = ((p.y-yMin)/bh*100).toFixed(2);
+          return `${px}% ${py}%`;
+        }
+        const pts = [];
+        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi1,lam1+t*(lam2-lam1)))); }  // bottom →
+        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi1+t*(phi2-phi1),lam2))); }  // right ↑
+        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi2,lam2+t*(lam1-lam2)))); }  // top ←
+        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi2+t*(phi1-phi2),lam1))); }  // left ↓
+
+        // z-depth for painter sort (higher = closer to viewer)
+        const phiC=(phi1+phi2)/2, lamC=(lam1+lam2)/2;
+        const z = Math.cos(phiC)*Math.cos(lamC);
+
+        pos.push({
+          left: cx+xMin, top: cy+yMin,
+          width: bw, height: bh,
+          clipPath: `polygon(${pts.join(',')})`,
+          z
+        });
+      }
+    }
+    return pos;
+  }
+
+  function applyPositions(positions, withTransition) {
+    cardEls.forEach((c,i) => {
+      if (withTransition) c.classList.add('morphing');
+      else c.classList.remove('morphing');
+    });
+    cardEls.forEach((c,i) => {
+      const p = positions[i];
+      c.style.left   = p.left   + 'px';
+      c.style.top    = p.top    + 'px';
+      c.style.width  = p.width  + 'px';
+      c.style.height = p.height + 'px';
+      if (p.clipPath) c.style.clipPath = p.clipPath;
+      if (p.z !== undefined) c.style.zIndex = Math.round(p.z * 100 + 100);
+    });
+  }
+
+  let _gridPos   = null;
+  let _globePos  = null;
+  let _globeShown = false;
+
+  function initCardLayout() {
+    _gridPos  = computeGridPositions();
+    _globePos = computeGlobePositions();
+    applyPositions(_gridPos.map(p => ({...p, clipPath: RECT_CLIP, z: undefined})), false);
+    cardEls.forEach(c => c.style.zIndex = '');
+    _globeShown = false;
+  }
+
+  window.addEventListener('resize', () => {
+    cardEls.forEach(c => c.classList.remove('morphing'));
+    initCardLayout();
+    if (_globeShown) applyPositions(_globePos = computeGlobePositions(), false);
+  });
+
+  requestAnimationFrame(initCardLayout);
+
   // cards appear after "24" is fully typed in frame 2
   const CARDS_TRIGGER_CHAR = sentences[2].indexOf('24') + 2;
   const CARDS_TRIGGER_P    = (CARDS_TRIGGER_CHAR / sentences[2].length) * TYPE_END;
@@ -868,15 +1074,30 @@
         }
       });
     } else if (frameIdx === 4) {
-      cardsEl.style.opacity = 0;
-      nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
-      globeWrap.style.opacity = opacity;
-      startGlobe();
-    } else {
-      cardsEl.style.opacity = 0;
+      cardsEl.style.opacity = opacity;
+      cardEls.forEach(c => { c.style.opacity = 1; });
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
       globeWrap.style.opacity = 0;
       stopGlobe();
+      if (!_globeShown) {
+        _globeShown = true;
+        _globePos = computeGlobePositions();
+        // First snap to grid (no transition), then morph to globe
+        applyPositions((_gridPos||computeGridPositions()).map(p=>({...p, clipPath:RECT_CLIP})), false);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          applyPositions(_globePos, true);
+        }));
+      }
+    } else {
+      nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
+      globeWrap.style.opacity = 0;
+      stopGlobe();
+      if (_globeShown) {
+        _globeShown = false;
+        applyPositions((_gridPos||computeGridPositions()).map(p=>({...p, clipPath:RECT_CLIP})), true);
+        cardEls.forEach(c => c.style.zIndex = '');
+      }
+      cardsEl.style.opacity = 0;
     }
   }
 
