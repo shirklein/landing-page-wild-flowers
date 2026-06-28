@@ -416,6 +416,7 @@
       width: 136%;
       height: 136%;
       object-fit: contain;
+      clip-path: polygon(50% 50%, 50% 0%, 50% 0%);
     }
     .card-label span {
       font-family: 'Narkiss Yair Variable', serif;
@@ -426,9 +427,6 @@
       white-space: nowrap;
     }
     .card-label.visible { opacity: 1; }
-    .card-label img {
-      clip-path: polygon(50% 50%, 50% 0%, 50% 0%);
-    }
     .card-label.visible img {
       animation: revealCircle 0.65s linear forwards;
     }
