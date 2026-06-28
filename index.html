@@ -376,6 +376,24 @@
       50% { opacity: 0; }
     }
 
+    /* ── גלוב פריים 5 ── */
+    #globe-wrap {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 50%;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+    }
+    #globe-canvas {
+      width: 38vw;
+      height: 38vw;
+    }
+
     /* ── מלבנים פריים 3 ── */
     #cards-frame3 {
       position: fixed;
@@ -493,6 +511,7 @@
 
 <!-- ── עמוד הבית ── -->
 <div id="page-home" class="page active">
+  <div id="globe-wrap"><canvas id="globe-canvas"></canvas></div>
   <div id="cards-frame3"><div class="cards-grid"><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div></div></div>
   <img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" />
   <div id="home-scroll-space"></div>
@@ -848,10 +867,115 @@
           wrap.classList.remove('visible');
         }
       });
+    } else if (frameIdx === 4) {
+      cardsEl.style.opacity = 0;
+      nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
+      globeWrap.style.opacity = opacity;
+      startGlobe();
     } else {
       cardsEl.style.opacity = 0;
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
+      globeWrap.style.opacity = 0;
+      stopGlobe();
     }
+  }
+
+  // ── Globe renderer ────────────────────────────────────────────────────────────
+  const globeWrap   = document.getElementById('globe-wrap');
+  const globeCanvas = document.getElementById('globe-canvas');
+  const globeCtx    = globeCanvas.getContext('2d');
+  let globeRot      = 0;
+  let globeLastTs   = null;
+  let globeRafId    = null;
+
+  function resizeGlobe() {
+    const s = globeCanvas.offsetWidth;
+    globeCanvas.width = globeCanvas.height = s * window.devicePixelRatio;
+    globeCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resizeGlobe();
+  window.addEventListener('resize', () => { resizeGlobe(); renderGlobe(globeRot); });
+
+  function ortho(phi, lam, R) {
+    return {
+      x: R * Math.cos(phi) * Math.sin(lam),
+      y: -R * Math.sin(phi),
+      z: Math.cos(phi) * Math.cos(lam)
+    };
+  }
+
+  function drawGlobePanel(cx, cy, R, phi1, phi2, lam1, lam2, color) {
+    const N = 12;
+    globeCtx.beginPath();
+    for (let i = 0; i <= N; i++) {
+      const l = lam1 + (lam2 - lam1) * i / N;
+      const p = ortho(phi1, l, R);
+      i === 0 ? globeCtx.moveTo(cx + p.x, cy + p.y) : globeCtx.lineTo(cx + p.x, cy + p.y);
+    }
+    for (let i = 1; i <= N; i++) {
+      const p = ortho(phi1 + (phi2 - phi1) * i / N, lam2, R);
+      globeCtx.lineTo(cx + p.x, cy + p.y);
+    }
+    for (let i = 1; i <= N; i++) {
+      const l = lam2 + (lam1 - lam2) * i / N;
+      const p = ortho(phi2, l, R);
+      globeCtx.lineTo(cx + p.x, cy + p.y);
+    }
+    for (let i = 1; i <= N; i++) {
+      const p = ortho(phi2 + (phi1 - phi2) * i / N, lam1, R);
+      globeCtx.lineTo(cx + p.x, cy + p.y);
+    }
+    globeCtx.closePath();
+    globeCtx.fillStyle = color;
+    globeCtx.fill();
+    globeCtx.strokeStyle = 'rgba(255,255,255,0.85)';
+    globeCtx.lineWidth = R * 0.007;
+    globeCtx.stroke();
+  }
+
+  function renderGlobe(rot) {
+    const size = globeCanvas.offsetWidth;
+    const cx = size / 2, cy = size / 2;
+    const R  = size * 0.46;
+    globeCtx.clearRect(0, 0, size, size);
+
+    globeCtx.save();
+    globeCtx.beginPath();
+    globeCtx.arc(cx, cy, R, 0, Math.PI * 2);
+    globeCtx.clip();
+
+    const rows = 4, cols = 6;
+    const panels = [];
+    for (let row = 0; row < rows; row++) {
+      const phi1 = -Math.PI / 2 + Math.PI * row / rows;
+      const phi2 = -Math.PI / 2 + Math.PI * (row + 1) / rows;
+      for (let col = 0; col < cols; col++) {
+        const lam1 = -Math.PI + 2 * Math.PI * col / cols + rot;
+        const lam2 = -Math.PI + 2 * Math.PI * (col + 1) / cols + rot;
+        const z = Math.cos((phi1 + phi2) / 2) * Math.cos((lam1 + lam2) / 2);
+        panels.push({ phi1, phi2, lam1, lam2, z, idx: row * cols + col });
+      }
+    }
+    panels.sort((a, b) => a.z - b.z);
+    for (const p of panels) {
+      drawGlobePanel(cx, cy, R, p.phi1, p.phi2, p.lam1, p.lam2, FIXED_COLORS[p.idx]);
+    }
+
+    globeCtx.restore();
+  }
+
+  function globeLoop(ts) {
+    if (!globeLastTs) globeLastTs = ts;
+    globeRot += (ts - globeLastTs) / 1000 * 0.28;
+    globeLastTs = ts;
+    renderGlobe(globeRot);
+    globeRafId = requestAnimationFrame(globeLoop);
+  }
+  function startGlobe() {
+    if (!globeRafId) { globeLastTs = null; globeRafId = requestAnimationFrame(globeLoop); }
+  }
+  function stopGlobe() {
+    if (globeRafId) { cancelAnimationFrame(globeRafId); globeRafId = null; }
   }
 
   function onScroll() {
