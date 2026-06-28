@@ -341,7 +341,7 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
-      padding: 0 5vw 2rem;
+      padding: 0 5rem 2rem 5vw;
       pointer-events: none;
     }
 
@@ -707,6 +707,7 @@
   let lastChars   = -1;
   let lastOpacity = -1;
   let lastDotIdx  = -1;
+  let lastFrameIdx = -1;
   let ticking     = false;
 
   // "במשך שנים רבות" — pre-typed at load
@@ -761,6 +762,11 @@
       opacity = 1 - fadeP;
     }
 
+    if (frameIdx !== lastFrameIdx) {
+      lastFrameIdx = frameIdx;
+      lastChars = -1;
+    }
+
     if (chars !== lastChars) {
       lastChars = chars;
       let shown = text.slice(0, chars);
@@ -800,23 +806,26 @@
   const HIFTZE_START = sentences[1].indexOf('הפצה');
   const HIFTZE_END   = HIFTZE_START + 4;
 
+  // loopStart: initial angle of the spiral loop (degrees), loopR: max loop radius (px)
   const SEED_CONFIGS = [
-    { angle: 180, dist: 1400, sway:  8, freq: 2.6, delay: 0.00, spin:  280, size: 28 },
-    { angle: 178, dist: 1350, sway:  6, freq: 3.2, delay: 0.04, spin: -320, size: 22 },
-    { angle: 182, dist: 1500, sway: 10, freq: 2.0, delay: 0.08, spin:  360, size: 18 },
-    { angle: 176, dist: 1420, sway:  7, freq: 2.9, delay: 0.03, spin: -260, size: 26 },
-    { angle: 183, dist: 1300, sway:  9, freq: 3.5, delay: 0.06, spin:  400, size: 16 },
-    { angle: 179, dist: 1380, sway:  5, freq: 2.3, delay: 0.10, spin: -300, size: 20 },
-    { angle: 181, dist: 1460, sway: 11, freq: 3.0, delay: 0.02, spin:  340, size: 14 },
-    { angle: 177, dist: 1320, sway:  8, freq: 2.7, delay: 0.07, spin: -380, size: 24 },
-    { angle: 184, dist: 1550, sway:  6, freq: 3.3, delay: 0.05, spin:  260, size: 15 },
-    { angle: 178, dist: 1250, sway: 10, freq: 2.1, delay: 0.12, spin: -310, size: 20 },
-    { angle: 181, dist: 1480, sway:  7, freq: 3.8, delay: 0.09, spin:  420, size: 12 },
-    { angle: 179, dist: 1360, sway:  9, freq: 2.5, delay: 0.01, spin: -270, size: 26 },
-    { angle: 182, dist: 1420, sway:  6, freq: 3.1, delay: 0.11, spin:  350, size: 18 },
-    { angle: 180, dist: 1300, sway:  8, freq: 2.8, delay: 0.06, spin: -290, size: 14 },
-    { angle: 177, dist: 1500, sway:  7, freq: 3.6, delay: 0.13, spin:  380, size: 11 },
+    { angle: 180, dist: 1400, sway:  8, freq: 2.6, delay: 0.00, spin:  280, size: 28, loopStart:  30, loopR: 90 },
+    { angle: 178, dist: 1350, sway:  6, freq: 3.2, delay: 0.04, spin: -320, size: 22, loopStart: 310, loopR: 70 },
+    { angle: 182, dist: 1500, sway: 10, freq: 2.0, delay: 0.08, spin:  360, size: 18, loopStart:  70, loopR: 110 },
+    { angle: 176, dist: 1420, sway:  7, freq: 2.9, delay: 0.03, spin: -260, size: 26, loopStart: 260, loopR: 80 },
+    { angle: 183, dist: 1300, sway:  9, freq: 3.5, delay: 0.06, spin:  400, size: 16, loopStart: 140, loopR: 60 },
+    { angle: 179, dist: 1380, sway:  5, freq: 2.3, delay: 0.10, spin: -300, size: 20, loopStart: 200, loopR: 75 },
+    { angle: 181, dist: 1460, sway: 11, freq: 3.0, delay: 0.02, spin:  340, size: 14, loopStart:  50, loopR: 95 },
+    { angle: 177, dist: 1320, sway:  8, freq: 2.7, delay: 0.07, spin: -380, size: 24, loopStart: 290, loopR: 85 },
+    { angle: 184, dist: 1550, sway:  6, freq: 3.3, delay: 0.05, spin:  260, size: 15, loopStart: 170, loopR: 65 },
+    { angle: 178, dist: 1250, sway: 10, freq: 2.1, delay: 0.12, spin: -310, size: 20, loopStart: 100, loopR: 72 },
+    { angle: 181, dist: 1480, sway:  7, freq: 3.8, delay: 0.09, spin:  420, size: 12, loopStart: 230, loopR: 55 },
+    { angle: 179, dist: 1360, sway:  9, freq: 2.5, delay: 0.01, spin: -270, size: 26, loopStart:  15, loopR: 88 },
+    { angle: 182, dist: 1420, sway:  6, freq: 3.1, delay: 0.11, spin:  350, size: 18, loopStart: 340, loopR: 78 },
+    { angle: 180, dist: 1300, sway:  8, freq: 2.8, delay: 0.06, spin: -290, size: 14, loopStart: 120, loopR: 62 },
+    { angle: 177, dist: 1500, sway:  7, freq: 3.6, delay: 0.13, spin:  380, size: 11, loopStart: 220, loopR: 58 },
   ];
+
+  const LOOP_END = 0.42; // fraction of localP spent spiraling
 
   let seedOrigin = null; // {x, y} in viewport coords
 
@@ -851,28 +860,37 @@
 
       if (p <= 0) { el.style.opacity = 0; return; }
 
-      // trajectory
-      const rad   = (cfg.angle * Math.PI) / 180;
-      const eased = 1 - Math.pow(1 - p, 1.6); // ease-out
-      const dist  = eased * cfg.dist;
-      const baseX = seedOrigin.x + Math.cos(rad) * dist - 23;
-      const baseY = seedOrigin.y + Math.sin(rad) * dist - 23;
+      let x, y, opacity;
 
-      // wind sway
-      const swayX = Math.sin(p * Math.PI * cfg.freq) * cfg.sway;
-      const swayY = Math.cos(p * Math.PI * cfg.freq * 0.7) * cfg.sway * 0.5;
-
-      const x = baseX + swayX;
-      const y = baseY + swayY;
-
-      // fade out only once fully off the left edge
-      const offScreen = Math.max(0, -(x + 46)) / 60;
-      el.style.opacity = Math.max(0, 1 - offScreen);
+      if (p < LOOP_END) {
+        // ── שלב 1: סיבוב ספירלי סביב המוצא ──
+        const lp        = p / LOOP_END;                          // 0→1
+        const loopR     = lp * cfg.loopR;                        // רדיוס גדל
+        const loopAngle = (cfg.loopStart + lp * 360) * Math.PI / 180;
+        x       = seedOrigin.x + Math.cos(loopAngle) * loopR - 23;
+        y       = seedOrigin.y + Math.sin(loopAngle) * loopR - 23;
+        opacity = Math.min(1, lp * 2.5);                         // fade-in
+      } else {
+        // ── שלב 2: טיסה שמאלה ──
+        const fp    = (p - LOOP_END) / (1 - LOOP_END);           // 0→1
+        const rad   = (cfg.angle * Math.PI) / 180;
+        const eased = 1 - Math.pow(1 - fp, 1.6);
+        const dist  = eased * cfg.dist;
+        const baseX = seedOrigin.x + Math.cos(rad) * dist - 23;
+        const baseY = seedOrigin.y + Math.sin(rad) * dist - 23;
+        const swayX = Math.sin(fp * Math.PI * cfg.freq) * cfg.sway;
+        const swayY = Math.cos(fp * Math.PI * cfg.freq * 0.7) * cfg.sway * 0.5;
+        x = baseX + swayX;
+        y = baseY + swayY;
+        const offScreen = Math.max(0, -(x + 46)) / 60;
+        opacity = Math.max(0, 1 - offScreen);
+      }
 
       const angle = p * cfg.spin;
       el.style.width     = cfg.size + 'px';
       el.style.left      = x + 'px';
       el.style.top       = y + 'px';
+      el.style.opacity   = opacity;
       el.style.transform = `rotate(${angle}deg)`;
     });
   }
@@ -917,13 +935,14 @@
   const COLS = 6, ROWS = 4;
   const EDGE_N = 5;        // polygon points per edge (→ 20 total, matching both states)
 
-  // 20-point rectangle clip-path polygon for grid state
+  // 20-point rectangle clip-path — winding order matches globe polygon:
+  // top→, right↓, bottom←, left↑  (starting from top-left corner)
   function rectClipPath() {
     const pts = [];
-    for (let i=0; i<EDGE_N; i++) pts.push(`${(i/EDGE_N*100).toFixed(1)}% 0%`);
-    for (let i=0; i<EDGE_N; i++) pts.push(`100% ${(i/EDGE_N*100).toFixed(1)}%`);
-    for (let i=0; i<EDGE_N; i++) pts.push(`${((1-i/EDGE_N)*100).toFixed(1)}% 100%`);
-    for (let i=0; i<EDGE_N; i++) pts.push(`0% ${((1-i/EDGE_N)*100).toFixed(1)}%`);
+    for (let i=0; i<EDGE_N; i++) pts.push(`${(i/EDGE_N*100).toFixed(1)}% 0%`);       // top →
+    for (let i=0; i<EDGE_N; i++) pts.push(`100% ${(i/EDGE_N*100).toFixed(1)}%`);      // right ↓
+    for (let i=0; i<EDGE_N; i++) pts.push(`${((1-i/EDGE_N)*100).toFixed(1)}% 100%`);  // bottom ←
+    for (let i=0; i<EDGE_N; i++) pts.push(`0% ${((1-i/EDGE_N)*100).toFixed(1)}%`);    // left ↑
     return `polygon(${pts.join(',')})`;
   }
 
@@ -952,7 +971,7 @@
 
     // lat/lon grid — show full front hemisphere
     const phiEdges = [], lamEdges = [];
-    for (let i=0; i<=ROWS; i++) phiEdges.push(-Math.PI/2 + Math.PI*i/ROWS);
+    for (let i=0; i<=ROWS; i++) phiEdges.push(Math.PI/2 - Math.PI*i/ROWS);
     for (let i=0; i<=COLS; i++) lamEdges.push(-Math.PI/2 + Math.PI*i/COLS);
 
     // gap in radians ≈ 1vw / R (matching grid gap)
@@ -1009,6 +1028,35 @@
     return pos;
   }
 
+  // parse "polygon(x1% y1%, x2% y2%, ...)" → flat array of numbers
+  function parsePoly(s) {
+    return s.replace('polygon(','').replace(')','').split(',').flatMap(pt => pt.trim().split(' ').map(parseFloat));
+  }
+
+  // interpolate two polygon strings with same point count
+  function lerpPoly(a, b, t) {
+    const pa = parsePoly(a), pb = parsePoly(b);
+    const pts = [];
+    for (let i=0; i<pa.length; i+=2) {
+      const x = pa[i]   + (pb[i]   - pa[i])   * t;
+      const y = pa[i+1] + (pb[i+1] - pa[i+1]) * t;
+      pts.push(`${x.toFixed(2)}% ${y.toFixed(2)}%`);
+    }
+    return `polygon(${pts.join(',')})`;
+  }
+
+  // lerp between grid and globe position arrays
+  function lerpPositions(gp, sp, t) {
+    return gp.map((g, i) => ({
+      left:     g.left     + (sp[i].left     - g.left)     * t,
+      top:      g.top      + (sp[i].top      - g.top)      * t,
+      width:    g.width    + (sp[i].width    - g.width)    * t,
+      height:   g.height   + (sp[i].height   - g.height)   * t,
+      clipPath: lerpPoly(g.clipPath || RECT_CLIP, sp[i].clipPath, t),
+      z: sp[i].z,
+    }));
+  }
+
   function applyPositions(positions, withTransition) {
     cardEls.forEach((c,i) => {
       if (withTransition) c.classList.add('morphing');
@@ -1061,7 +1109,7 @@
       });
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
     } else if (frameIdx === 3) {
-      cardsEl.style.opacity = opacity;
+      cardsEl.style.opacity = 1;
       cardEls.forEach(c => { c.style.opacity = 1; });
       const showNdirim = chars >= NDIRIM_CHAR;
       nidirLabels.forEach(({ wrap }) => {
@@ -1074,29 +1122,40 @@
         }
       });
     } else if (frameIdx === 4) {
-      cardsEl.style.opacity = opacity;
-      cardEls.forEach(c => { c.style.opacity = 1; });
+      cardsEl.style.opacity = 1;
+      cardEls.forEach(c => { c.style.opacity = 1; c.classList.remove('morphing'); });
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
       globeWrap.style.opacity = 0;
       stopGlobe();
-      if (!_globeShown) {
-        _globeShown = true;
-        _globePos = computeGlobePositions();
-        // First snap to grid (no transition), then morph to globe
-        applyPositions((_gridPos||computeGridPositions()).map(p=>({...p, clipPath:RECT_CLIP})), false);
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          applyPositions(_globePos, true);
-        }));
-      }
+      _globeShown = true;
+
+      const gp = _gridPos  || (_gridPos  = computeGridPositions());
+      const sp = _globePos || (_globePos = computeGlobePositions());
+
+      // ease-in-out over the full frame progress — positions only, no clip-path distortion
+      const t  = progress;
+      const et = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+
+      applyPositions(lerpPositions(
+        gp.map(p => ({...p, clipPath: RECT_CLIP})),
+        sp,
+        et
+      ), false);
+
+    } else if (frameIdx === 5) {
+      // שמור על הספירה גלויה — עם צורת גלובוס
+      cardsEl.style.opacity = 1;
+      cardEls.forEach(c => { c.style.opacity = 1; c.classList.remove('morphing'); });
+      nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
+      globeWrap.style.opacity = 0;
+      stopGlobe();
+      const sp = _globePos || (_globePos = computeGlobePositions());
+      applyPositions(sp, false);
     } else {
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
       globeWrap.style.opacity = 0;
       stopGlobe();
-      if (_globeShown) {
-        _globeShown = false;
-        applyPositions((_gridPos||computeGridPositions()).map(p=>({...p, clipPath:RECT_CLIP})), true);
-        cardEls.forEach(c => c.style.zIndex = '');
-      }
+      _globeShown = false;
       cardsEl.style.opacity = 0;
     }
   }
