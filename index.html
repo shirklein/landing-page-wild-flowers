@@ -247,8 +247,8 @@
     .seed-card .tag.price {
       font-weight: 700;
       font-size: 1.1rem;
-      text-align: left;
-      padding-left: 3rem;
+      text-align: center;
+      padding-left: 1rem;
       white-space: nowrap;
     }
 
@@ -453,10 +453,42 @@
       justify-content: center;
       pointer-events: none;
       opacity: 0;
+      z-index: 2;
     }
     .cards-grid {
       position: relative;
       width: 42vw;
+    }
+    .cards-grid-back {
+      position: absolute;
+      width: 42vw;
+      transform: scaleX(-1);
+      pointer-events: none;
+    }
+    #flower-wrap {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 50%;
+      bottom: 0;
+      pointer-events: none;
+    }
+    #flower-anim {
+      position: absolute;
+      left: 50%;
+      top: 65%;
+      /* stem base at globe collapse point (transform-origin: center 65%) */
+      transform: translateX(-50%) translateY(-90.2%);
+      max-width: 14.25vw;
+      max-height: 30vh;
+      width: auto;
+      height: auto;
+      display: none;
+    }
+    .card-back {
+      position: absolute;
+      opacity: 0;
+      will-change: left, top, width, height, clip-path;
     }
     .card-rect {
       position: absolute;
@@ -514,6 +546,10 @@
       87%  { clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%); }
       100% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
     }
+    @keyframes spin-ring {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
 
     /* ── זרעים מתעופפים ── */
     .seed-p {
@@ -561,12 +597,16 @@
   </ul>
 </nav>
 
-<img src="Asset 1 2 copy.svg" id="fixed-logo" style="position:fixed;bottom:2rem;left:2rem;z-index:1000;width:clamp(30px,4vw,60px);pointer-events:none;">
+<div id="logo-wrap" style="position:fixed;bottom:7rem;left:7rem;z-index:1000;pointer-events:none;display:flex;align-items:center;justify-content:center;">
+  <img src="Asset 3.svg" id="logo-ring" style="position:absolute;width:clamp(66px,9vw,135px);animation:spin-ring 18s linear infinite;">
+  <img src="Asset 1 2 copy.svg" id="fixed-logo" style="width:clamp(22px,3vw,45px);position:relative;z-index:1;">
+</div>
 
 <!-- ── עמוד הבית ── -->
 <div id="page-home" class="page active">
   <div id="globe-wrap"><canvas id="globe-canvas"></canvas></div>
-  <div id="cards-frame3"><div class="cards-grid"><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div></div></div>
+  <div id="flower-wrap"><img id="flower-anim" src="" alt=""></div>
+  <div id="cards-frame3"><div class="cards-grid"><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div></div><div class="cards-grid-back"><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div></div></div>
   <img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" />
   <div id="home-scroll-space"></div>
   <div id="text-stage">
@@ -614,31 +654,79 @@
 
 <script>
   const seeds = [
-    { id: 1,  name: "דּוֹנַגִּית אֶרֶץ־יִשְׂרְאֵלִית", hoverClass: "hover-yellow", latin: "Cerinthe palaestina",          rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 2,  name: "דַּרְדַּר כָּחֹל",                hoverClass: "hover-pink", latin: "Centaurea cyanoides",          rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 3,  name: "זַעְזוּעִית גְּדוֹלָה",           hoverClass: "hover-orange", latin: "Briza maxima",                 rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
-    { id: 4,  name: "טֹפַח סְפָרַדִּי",               hoverClass: "hover-yellow2", latin: "Lathyrus clymenum",            rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 5,  name: "מַרְוָה דְּגוּלָה",              hoverClass: "hover-yellow", latin: "Salvia viridis",               rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 6,  name: "מַרְוָה כְּחֻלָּה",              hoverClass: "hover-yellow", latin: "Salvia indica",                rarity: "נדיר מאוד", price: 26, season: "", habitat: "", color: "", desc: "" },
-    { id: 7,  name: "מַרְוַת יְרוּשָׁלַיִם",         hoverClass: "hover-yellow2", latin: "Salvia hierosolymitana Boiss", rarity: "",           price: 18, season: "", habitat: "", color: "", desc: "" },
-    { id: 8,  name: "מִישׁוֹיָה פַּעֲמוֹנִית",        hoverClass: "hover-magenta", latin: "Michauxia campanuloides",      rarity: "נדיר מאוד", price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 9,  name: "פְּרֵגָה צְהֻבָּה",             hoverClass: "hover-cyan", latin: "Glaucium flavum",              rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 10, name: "פֶּרֶג אַגָּסִי",                hoverClass: "hover-yellow2", latin: "Salvia indica",                rarity: "",           price: 19, season: "", habitat: "", color: "", desc: "" },
-    { id: 11, name: "פִּשְׁתָּנִית מְשֻׁלֶּשֶׁת",     hoverClass: "hover-magenta", latin: "Linaria triphylla",            rarity: "סכנת הכחדה", price: 32, season: "", habitat: "", color: "", desc: "" },
-    { id: 12, name: "צַמְרוּרַת בּוּאֶסִיָּה",        latin: "Trichodesma boissieri Post",   rarity: "נדיר",       price: 35, season: "", habitat: "", color: "", desc: "" },
-    { id: 13, name: "צִפַּרְנִית דַּמַּשְׂקָאִית",    hoverClass: "hover-teal", latin: "Silene damascena",             rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 14, name: "צִפַּרְנִית גְּדוֹלָה",          latin: "Silene swertiifolia Boiss",    rarity: "נדיר",       price: 24, season: "", habitat: "", color: "", desc: "" },
-    { id: 15, name: "עַדְעַד כָּחֹל",                 hoverClass: "hover-orange", latin: "Limonium sinuatum",            rarity: "",           price: 18, season: "", habitat: "", color: "", desc: "" },
-    { id: 16, name: "קַחְוַן הַצַּבָּעִים",         hoverClass: "hover-teal", latin: "Anthemis tinctoria",           rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 17, name: "תִּלְתָּן הָאַרְגָּמָן",          hoverClass: "hover-yellow", latin: "Trifolium purpureum",          rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
-    { id: 18, name: "תִּלְתָּן תְּרִיסָנִי",           latin: "Trifolium clypeatum",          rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 19, name: "תֻּרְמוּס הֶהָרִים",              hoverClass: "hover-pink", latin: "Lupinus pilosus",              rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
+    { id: 1,  img: "דונגית ארץ ישראלית.png",    name: "דּוֹנַגִּית אֶרֶץ־יִשְׂרְאֵלִית", hoverClass: "hover-yellow",  latin: "Cerinthe palaestina",          rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 2,  img: "דרדר כחול.png",              name: "דַּרְדַּר כָּחֹל",                hoverClass: "hover-pink",    latin: "Centaurea cyanoides",          rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 3,  img: "זעזועית גדולה.png",          name: "זַעְזוּעִית גְּדוֹלָה",           hoverClass: "hover-orange",  latin: "Briza maxima",                 rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
+    { id: 4,  img: "טופח ספרדי.png",             name: "טֹפַח סְפָרַדִּי",               hoverClass: "hover-yellow2", latin: "Lathyrus clymenum",            rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 5,  img: "מרוה דגולה.png",             name: "מַרְוָה דְּגוּלָה",              hoverClass: "hover-yellow",  latin: "Salvia viridis",               rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 6,  img: "מרוה כחולה.png",             name: "מַרְוָה כְּחֻלָּה",              hoverClass: "hover-yellow",  latin: "Salvia indica",                rarity: "נדיר מאוד", price: 26, season: "", habitat: "", color: "", desc: "" },
+    { id: 7,  img: "מרוות ירושלים.png",          name: "מַרְוַת יְרוּשָׁלַיִם",         hoverClass: "hover-yellow2", latin: "Salvia hierosolymitana Boiss", rarity: "",           price: 18, season: "", habitat: "", color: "", desc: "" },
+    { id: 8,  img: "מישויה פעמונית.png",         name: "מִישׁוֹיָה פַּעֲמוֹנִית",        hoverClass: "hover-magenta", latin: "Michauxia campanuloides",      rarity: "נדיר מאוד", price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 9,  img: "",                           name: "פְּרֵגָה צְהֻבָּה",             hoverClass: "hover-cyan",    latin: "Glaucium flavum",              rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 10, img: "פרג אגסי.png",               name: "פֶּרֶג אַגָּסִי",                hoverClass: "hover-yellow2", latin: "Papaver umbonatum",            rarity: "",           price: 19, season: "", habitat: "", color: "", desc: "" },
+    { id: 11, img: "",                           name: "פִּשְׁתָּנִית מְשֻׁלֶּשֶׁת",     hoverClass: "hover-magenta", latin: "Linaria triphylla",            rarity: "סכנת הכחדה", price: 32, season: "", habitat: "", color: "", desc: "" },
+    { id: 12, img: "צמרורת בואסיה2.png",         name: "צַמְרוּרַת בּוּאֶסִיָּה",        latin: "Trichodesma boissieri Post",   rarity: "נדיר",       price: 35, season: "", habitat: "", color: "", desc: "" },
+    { id: 13, img: "ציפורנית דמשקאית.png",       name: "צִפַּרְנִית דַּמַּשְׂקָאִית",    hoverClass: "hover-teal",    latin: "Silene damascena",             rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 14, img: "ציפורנית גדולה.png",         name: "צִפַּרְנִית גְּדוֹלָה",          latin: "Silene swertiifolia Boiss",    rarity: "נדיר",       price: 24, season: "", habitat: "", color: "", desc: "" },
+    { id: 15, img: "עדעד כחול.png",              name: "עַדְעַד כָּחֹל",                 hoverClass: "hover-orange",  latin: "Limonium sinuatum",            rarity: "",           price: 18, season: "", habitat: "", color: "", desc: "" },
+    { id: 16, img: "קחוון הצבעית.png",           name: "קַחְוַן הַצַּבָּעִים",         hoverClass: "hover-teal",    latin: "Anthemis tinctoria",           rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 17, img: "תלתן הארגמן.png",            name: "תִּלְתָּן הָאַרְגָּמָן",          hoverClass: "hover-yellow",  latin: "Trifolium purpureum",          rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
+    { id: 18, img: "תלתן תריסני.png",            name: "תִּלְתָּן תְּרִיסָנִי",           latin: "Trifolium clypeatum",          rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
+    { id: 19, img: "תורמוס ההרים.png",           name: "תֻּרְמוּס הֶהָרִים",              hoverClass: "hover-pink",    latin: "Lupinus pilosus",              rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
   ];
+
+  // ── flower peek on hover ──
+  const PEEK_H = 180;
+  const peekWrap = document.createElement('div');
+  peekWrap.id = 'flower-peek-wrap';
+  peekWrap.style.cssText = 'position:fixed;overflow:hidden;pointer-events:none;z-index:50;height:'+PEEK_H+'px;';
+  const peekImg = document.createElement('img');
+  peekImg.style.cssText = 'position:absolute;top:0;left:50%;height:360px;width:auto;object-fit:contain;object-position:top;transform:translateX(-50%) translateY('+PEEK_H+'px);';
+  peekWrap.appendChild(peekImg);
+  document.body.appendChild(peekWrap);
+
+  let _peekRaf = null;
+  let _peekVisible = false;
+
+  function showFlowerPeek(card) {
+    if (_peekRaf) { cancelAnimationFrame(_peekRaf); _peekRaf = null; }
+    const src = card.dataset.img;
+    if (!src) return;
+    const rect   = card.getBoundingClientRect();
+    const latinR = card.querySelector('.latin').getBoundingClientRect();
+    const priceR = card.querySelector('.tag.price').getBoundingClientRect();
+    // reposition instantly (no transition on wrapper)
+    peekWrap.style.left   = priceR.left + 'px';
+    peekWrap.style.width  = (latinR.right - priceR.left) + 'px';
+    peekWrap.style.bottom = (window.innerHeight - rect.bottom) + 'px';
+    peekWrap.style.top    = '';
+    // snap image to start position, then animate up
+    peekImg.src = src;
+    peekImg.style.transition = 'none';
+    peekImg.style.transform  = 'translateX(-50%) translateY('+PEEK_H+'px)';
+    _peekRaf = requestAnimationFrame(() => {
+      _peekRaf = requestAnimationFrame(() => {
+        peekImg.style.transition = 'transform 0.4s cubic-bezier(0.22,1,0.36,1)';
+        peekImg.style.transform  = 'translateX(-50%) translateY(0)';
+        _peekRaf = null;
+        _peekVisible = true;
+      });
+    });
+  }
+
+  function hideFlowerPeek() {
+    if (_peekRaf) { cancelAnimationFrame(_peekRaf); _peekRaf = null; }
+    peekImg.style.transition = 'transform 0.25s ease-in';
+    peekImg.style.transform  = 'translateX(-50%) translateY('+PEEK_H+'px)';
+    _peekVisible = false;
+  }
 
   function renderShop() {
     const grid = document.getElementById('seeds-grid');
     grid.innerHTML = seeds.map(s => `
-      <div class="seed-card${s.hoverClass ? ' ' + s.hoverClass : ''}" onclick="showProduct(${s.id})">
+      <div class="seed-card${s.hoverClass ? ' ' + s.hoverClass : ''}"
+           onclick="showProduct(${s.id})"
+           ${s.img ? `data-img="${s.img}" onmouseenter="showFlowerPeek(this)" onmouseleave="hideFlowerPeek()"` : ''}>
         <div class="seed-card-name-col">
           <div class="seed-card-name">${s.name}</div>
           ${s.rarity ? `<span class="tag rarity">${s.rarity}</span>` : ''}
@@ -897,7 +985,15 @@
 
   const cardsEl   = document.getElementById('cards-frame3');
   const cardsGrid = cardsEl.querySelector('.cards-grid');
+  const flowerEl  = document.getElementById('flower-anim');
+  const flowerFrames = Array.from({length: 40}, (_, i) => {
+    const img = new Image();
+    img.src = `פריימים גדילה פרג אגסי/growing red flower${String(i).padStart(2,'0')}.png`;
+    return img;
+  });
+  const backGrid  = cardsEl.querySelector('.cards-grid-back');
   const cardEls   = Array.from(cardsEl.querySelectorAll('.card-rect'));
+  const backEls   = Array.from(cardsEl.querySelectorAll('.card-back'));
 
   const FIXED_COLORS = [
     '#93EDEB','#CFFF10','#F7559D','#00CCF0','#FFCE00','#FFCE00',
@@ -906,6 +1002,7 @@
     '#93EDEB','#FFCE00','#00CCF0','#FFC5EE','#FFF22D','#00CCF0'
   ];
   cardEls.forEach((c, i) => { c.style.background = FIXED_COLORS[i]; });
+  backEls.forEach((c, i) => { c.style.background = FIXED_COLORS[i]; });
 
   // pick 3 random cards for "נדיר" label
   const nidirIndices = [];
@@ -962,19 +1059,18 @@
     return pos;
   }
 
-  function computeGlobePositions() {
+  function computeGlobePositions(lamOffset = 0) {
     const vw  = window.innerWidth / 100;
     const R   = GLOBE_R_VW * vw;
     const W   = window.innerWidth * 0.42;
     const H   = parseFloat(cardsGrid.style.height) || window.innerWidth * 0.46;
     const cx  = W/2, cy = H/2;
 
-    // lat/lon grid — show full front hemisphere
+    // orthographic projection, north at top (r=0 → north pole)
     const phiEdges = [], lamEdges = [];
     for (let i=0; i<=ROWS; i++) phiEdges.push(Math.PI/2 - Math.PI*i/ROWS);
-    for (let i=0; i<=COLS; i++) lamEdges.push(-Math.PI/2 + Math.PI*i/COLS);
+    for (let i=0; i<=COLS; i++) lamEdges.push(-Math.PI/2 + Math.PI*i/COLS + lamOffset);
 
-    // gap in radians ≈ 1vw / R (matching grid gap)
     const GAP = vw / R * 0.5;
 
     function xy(phi, lam) {
@@ -1001,19 +1097,17 @@
         const yMin=Math.min(...ys), yMax=Math.max(...ys);
         const bw=xMax-xMin, bh=yMax-yMin;
 
-        // 20-point clip-path: 5 pts per edge, no repeated corners
         function pct(p) {
           const px = ((p.x-xMin)/bw*100).toFixed(2);
           const py = ((p.y-yMin)/bh*100).toFixed(2);
           return `${px}% ${py}%`;
         }
         const pts = [];
-        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi1,lam1+t*(lam2-lam1)))); }  // bottom →
-        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi1+t*(phi2-phi1),lam2))); }  // right ↑
-        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi2,lam2+t*(lam1-lam2)))); }  // top ←
-        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi2+t*(phi1-phi2),lam1))); }  // left ↓
+        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi1,lam1+t*(lam2-lam1)))); }
+        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi1+t*(phi2-phi1),lam2))); }
+        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi2,lam2+t*(lam1-lam2)))); }
+        for (let i=0;i<EDGE_N;i++) { const t=i/EDGE_N; pts.push(pct(xy(phi2+t*(phi1-phi2),lam1))); }
 
-        // z-depth for painter sort (higher = closer to viewer)
         const phiC=(phi1+phi2)/2, lamC=(lam1+lam2)/2;
         const z = Math.cos(phiC)*Math.cos(lamC);
 
@@ -1055,6 +1149,28 @@
       clipPath: lerpPoly(g.clipPath || RECT_CLIP, sp[i].clipPath, t),
       z: sp[i].z,
     }));
+  }
+
+  function syncBackGridSize() {
+    backGrid.style.height = cardsGrid.style.height;
+  }
+
+  function applyBackPositions(positions) {
+    backEls.forEach((c, i) => {
+      const p = positions[i];
+      c.style.left   = p.left   + 'px';
+      c.style.top    = p.top    + 'px';
+      c.style.width  = p.width  + 'px';
+      c.style.height = p.height + 'px';
+      if (p.clipPath) c.style.clipPath = p.clipPath;
+      if (p.z !== undefined) c.style.zIndex = Math.round(-p.z * 100 + 99);
+      // show only when panel is on the back (z < 0 in front frame = front in mirrored frame)
+      c.style.opacity = p.z <= 0 ? Math.min(1, -p.z * 5 + 0.15).toFixed(2) : '0';
+    });
+  }
+
+  function hideBackPanels() {
+    backEls.forEach(c => { c.style.opacity = '0'; });
   }
 
   function applyPositions(positions, withTransition) {
@@ -1110,6 +1226,9 @@
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
     } else if (frameIdx === 3) {
       cardsEl.style.opacity = 1;
+      cardsEl.style.transform = '';
+      cardsEl.style.transformOrigin = '';
+      cardsEl.style.clipPath = '';
       cardEls.forEach(c => { c.style.opacity = 1; });
       const showNdirim = chars >= NDIRIM_CHAR;
       nidirLabels.forEach(({ wrap }) => {
@@ -1123,34 +1242,105 @@
       });
     } else if (frameIdx === 4) {
       cardsEl.style.opacity = 1;
-      cardEls.forEach(c => { c.style.opacity = 1; c.classList.remove('morphing'); });
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
       globeWrap.style.opacity = 0;
       stopGlobe();
       _globeShown = true;
+      flowerEl.style.display = 'none';
 
       const gp = _gridPos  || (_gridPos  = computeGridPositions());
-      const sp = _globePos || (_globePos = computeGlobePositions());
+      const sp = _globePos || (_globePos = computeGlobePositions(0));
 
-      // ease-in-out over the full frame progress — positions only, no clip-path distortion
-      const t  = progress;
-      const et = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+      const MORPH_END    = 0.217;  // "הים" starts
+      const HAMAKOM_END  = 0.542;  // end of "המקומי"
 
-      applyPositions(lerpPositions(
-        gp.map(p => ({...p, clipPath: RECT_CLIP})),
-        sp,
-        et
-      ), false);
+      syncBackGridSize();
+      if (progress <= MORPH_END) {
+        // Phase 1: grid → globe morph
+        cardsEl.style.transform = '';
+        cardEls.forEach(c => { c.style.opacity = 1; c.classList.remove('morphing'); });
+        hideBackPanels();
+        const t  = Math.min(1, progress / MORPH_END);
+        const et = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+        applyPositions(lerpPositions(
+          gp.map(p => ({...p, clipPath: RECT_CLIP})), sp, et
+        ), false);
+      } else {
+        // Phase 2: 360° rotation + tilt, ends at "המקומי"
+        cardEls.forEach(c => c.classList.remove('morphing'));
+        const rp  = Math.min(1, (progress - MORPH_END) / (HAMAKOM_END - MORPH_END));
+        const rep = rp < 0.5 ? 2*rp*rp : -1+(4-2*rp)*rp;
+        const lamOff  = rep * 2 * Math.PI;   // 360°
+        const tiltDeg = rep * (-12);
+        cardsEl.style.transform = `rotate(${tiltDeg.toFixed(2)}deg)`;
+        backGrid.style.transform = `scaleX(-1) rotate(${tiltDeg.toFixed(2)}deg)`;
+        const rotPos = computeGlobePositions(lamOff);
+        applyPositions(rotPos, false);
+        // front panels: show when z > 0; hide when behind
+        rotPos.forEach((p, i) => {
+          cardEls[i].style.opacity = p.z > 0 ? '1' : '0';
+        });
+        // back panels: mirrored copy, show when z < 0
+        applyBackPositions(rotPos);
+      }
 
     } else if (frameIdx === 5) {
-      // שמור על הספירה גלויה — עם צורת גלובוס
       cardsEl.style.opacity = 1;
       cardEls.forEach(c => { c.style.opacity = 1; c.classList.remove('morphing'); });
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
       globeWrap.style.opacity = 0;
       stopGlobe();
-      const sp = _globePos || (_globePos = computeGlobePositions());
-      applyPositions(sp, false);
+      // 360° complete → same view as start, hold tilt
+      backGrid.style.transform = 'scaleX(-1)';
+      hideBackPanels();
+      const sp5 = _globePos || (_globePos = computeGlobePositions(0));
+      applyPositions(sp5, false);
+      // shrink toward lower point so poppy aligns with text
+      cardsEl.style.transformOrigin = 'center 65%';
+
+      // "זאת גם הסיבה שהם קלים לגידול בארץ" → globe shrinks to point
+      // "ומצמיחן" → poppy grows from that point
+      const SHRINK_END   = 0.162;         // globe reaches scale=0 (end of "בארץ")
+      const FLOWER_START = SHRINK_END * 0.776; // globe at ~10% size → poppy starts
+      const GROW_END     = 0.206;         // poppy fully grown (end of "ומצמיחים")
+
+      // globe shrink — independent of flower
+      if (progress < SHRINK_END) {
+        const tp  = progress / SHRINK_END;
+        const tep = tp < 0.5 ? 2*tp*tp : -1+(4-2*tp)*tp;
+        cardsEl.style.transform = `rotate(-12deg) scale(${(1 - tep).toFixed(4)})`;
+      } else {
+        cardsEl.style.transform = 'rotate(-12deg) scale(0)';
+      }
+
+      // poppy — starts when globe is at 2% (overlaps last moment of shrink)
+      if (progress >= FLOWER_START) {
+        const fp = Math.min(1, (progress - FLOWER_START) / (GROW_END - FLOWER_START));
+        const fi = Math.min(39, Math.floor(fp * 40));
+        flowerEl.src = flowerFrames[fi].src;
+        flowerEl.style.display = 'block';
+      } else {
+        flowerEl.style.display = 'none';
+      }
+    } else if (frameIdx === 6) {
+      nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
+      globeWrap.style.opacity = 0;
+      stopGlobe();
+      cardsEl.style.opacity = 1;
+      cardsEl.style.transformOrigin = '';
+      cardEls.forEach(c => { c.style.opacity = 1; c.classList.remove('morphing'); });
+      syncBackGridSize();
+      hideBackPanels();
+      backGrid.style.transform = 'scaleX(-1)';
+
+      if (!_gridPos) { _gridPos = computeGridPositions(); }
+      const sp6 = _globePos || (_globePos = computeGlobePositions(0));
+      applyPositions(sp6, false);
+      // show fully grown poppy in last frame
+      flowerEl.src = flowerFrames[39].src;
+      flowerEl.style.display = 'block';
+      cardsEl.style.opacity = 0;
+
     } else {
       nidirLabels.forEach(({ wrap }) => wrap.classList.remove('visible'));
       globeWrap.style.opacity = 0;
