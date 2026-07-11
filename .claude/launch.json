@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "flowers",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3457", "."],
-      "port": 3457
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["-e", "const http=require('http'),fs=require('fs'),path=require('path'),PORT=3458;http.createServer((req,res)=>{let f=path.join('/Users/shirklein/Desktop/enterance flowers page',req.url==='/'?'index.html':decodeURIComponent(req.url));try{const d=fs.readFileSync(f),e=path.extname(f),t={'.html':'text/html','.png':'image/png','.svg':'image/svg+xml','.ttf':'font/ttf','.mp4':'video/mp4'};res.writeHead(200,{'Content-Type':t[e]||'application/octet-stream','Access-Control-Allow-Origin':'*'});res.end(d);}catch(e){res.writeHead(404);res.end('not found');}}).listen(PORT,()=>console.log('ok'));"],
+      "port": 3458
     }
   ]
 }

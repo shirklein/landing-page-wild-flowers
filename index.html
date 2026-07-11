@@ -178,38 +178,105 @@
     .shop-header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
     .shop-header p { font-size: 1rem; opacity: 0.8; }
 
+    #shop-flower-panel {
+      position: fixed;
+      left: 0;
+      top: 64px;
+      bottom: 0;
+      width: 33.333vw;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 50;
+      border: 1px solid rgba(54, 14, 167, 0.5);
+      border-bottom: none;
+    }
+
+    #shop-flower-img {
+      max-width: 85%;
+      max-height: 70vh;
+      object-fit: contain;
+      opacity: 0;
+    }
+
+    #shop-intro {
+      margin-left: 33.333vw;
+      padding: 2.5rem 2.5rem 2rem;
+      border-bottom: 1px solid rgba(54,14,167,0.3);
+      direction: rtl;
+    }
+    #shop-intro p {
+      color: #360EA7;
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+      line-height: 1.7;
+      margin: 0 0 0.75rem;
+    }
+    #shop-intro p:last-child { margin-bottom: 0; }
+
     .seeds-grid {
-      display: table;
-      width: 100%;
-      border-top: 2px solid #360EA7;
-      border-collapse: collapse;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(54, 14, 167, 0.5);
+      margin-left: 33.333vw;
     }
 
     .seed-card {
-      display: table-row;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border-bottom: 1px solid rgba(54, 14, 167, 0.5);
       cursor: pointer;
+      z-index: 1;
+      transition: background 0.12s ease;
     }
 
-    .seed-card:hover > * { background: #f0ece6; }
-    .seed-card.hover-yellow:hover > * { background: #CFFF10; }
-    .seed-card.hover-yellow2:hover > * { background: #FFF22D; }
-    .seed-card.hover-pink:hover > * { background: #FFC5EE; }
-    .seed-card.hover-teal:hover > * { background: #93EDEB; }
-    .seed-card.hover-orange:hover > * { background: #FFB400; }
-    .seed-card.hover-magenta:hover > * { background: #F7559D; }
-    .seed-card.hover-cyan:hover > * { background: #00CCF0; }
-
-    .seed-card > * {
-      display: table-cell;
-      vertical-align: middle;
-      padding: 1rem 1.5rem;
-      border-bottom: 2px solid #360EA7;
+    .seed-card-row {
+      display: flex;
+      align-items: center;
+      padding: 1.1rem 2rem;
+      width: 100%;
     }
 
-    .seed-card-name-col {
+    .seed-card:hover {
+      z-index: 20;
+      background: #f0ece6;
+    }
+    .seed-card.hover-yellow:hover,  .seed-card.hover-yellow.expanded  { background: #CFFF10; }
+    .seed-card.hover-yellow2:hover, .seed-card.hover-yellow2.expanded { background: #FFF22D; }
+    .seed-card.hover-pink:hover,    .seed-card.hover-pink.expanded    { background: #FFC5EE; }
+    .seed-card.hover-teal:hover,    .seed-card.hover-teal.expanded    { background: #93EDEB; }
+    .seed-card.hover-orange:hover,  .seed-card.hover-orange.expanded  { background: #FFB400; }
+    .seed-card.hover-magenta:hover, .seed-card.hover-magenta.expanded { background: #F7559D; color: white; }
+    .seed-card.hover-magenta:hover .seed-card-name,
+    .seed-card.hover-magenta.expanded .seed-card-name,
+    .seed-card.hover-magenta:hover .latin,
+    .seed-card.hover-magenta.expanded .latin,
+    .seed-card.hover-magenta:hover .tag,
+    .seed-card.hover-magenta.expanded .tag,
+    .seed-card.hover-magenta:hover .seed-details-table td,
+    .seed-card.hover-magenta.expanded .seed-details-table td { color: white; }
+    .seed-card.hover-cyan:hover,    .seed-card.hover-cyan.expanded    { background: #00CCF0; }
+    .seed-card.hover-lilac:hover,   .seed-card.hover-lilac.expanded   { background: #FE98D6; }
+    .seed-card.hover-red:hover,     .seed-card.hover-red.expanded     { background: #eb4164; color: white; }
+    .seed-card.hover-red:hover .seed-card-name,
+    .seed-card.hover-red.expanded .seed-card-name,
+    .seed-card.hover-red:hover .latin,
+    .seed-card.hover-red.expanded .latin,
+    .seed-card.hover-red:hover .tag,
+    .seed-card.hover-red.expanded .tag,
+    .seed-card.hover-red:hover .seed-details-table td,
+    .seed-card.hover-red.expanded .seed-details-table td { color: white; }
+
+
+.seed-card-name-col {
+      flex: 0 0 42%;
       text-align: right;
-      padding-right: 3rem;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
 
     .seed-card-name {
@@ -217,17 +284,20 @@
       font-weight: 400;
       color: #360EA7;
       line-height: 1.2;
-      display: inline;
     }
 
     .seed-card-name-row { display: contents; }
 
     .seed-card .latin {
+      flex: 0 0 30%;
       font-style: italic;
       font-size: clamp(0.75rem, 1.2vw, 1rem);
       color: #360EA7;
       text-align: right;
-      width: 99%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
 
     .seed-card .tag {
@@ -236,20 +306,79 @@
       white-space: nowrap;
     }
 
-    .seed-card .tag.rarity {
+    .seed-card .tag.rarity-col {
+      flex: 0 0 auto;
       font-weight: 600;
-      opacity: 0.7;
       font-size: 0.78rem;
-      vertical-align: middle;
-      padding-right: 0.5rem;
+      white-space: nowrap;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      color: rgba(54, 14, 167, 0.7);
     }
 
     .seed-card .tag.price {
+      flex: 0 0 auto;
       font-weight: 700;
       font-size: 1.1rem;
-      text-align: center;
+      margin-right: auto;
       padding-left: 1rem;
       white-space: nowrap;
+    }
+
+    /* ── פרטי פרח מורחבים ── */
+    .seed-details {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s ease;
+      overflow: hidden;
+    }
+
+    .seed-card.expanded .seed-details {
+      grid-template-rows: 1fr;
+    }
+
+    .seed-details-inner {
+      min-height: 0;
+      padding: 0 2rem;
+    }
+
+    .seed-card.expanded .seed-details-inner {
+      padding: 1.5rem 2rem 2rem;
+    }
+
+    .seed-details-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+      color: #360EA7;
+    }
+
+    .seed-details-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(54, 14, 167, 0.15);
+      vertical-align: top;
+      text-align: right;
+    }
+
+    .seed-details-table td:first-child {
+      font-weight: 600;
+      white-space: nowrap;
+      width: 9rem;
+      opacity: 0.65;
+    }
+
+    .seed-details-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .seed-details-desc {
+      margin-bottom: 1.5rem;
+      max-width: 33.333vw;
+      font-size: clamp(1.6rem, 2.2vw, 1.9rem);
+      font-weight: 700;
+      line-height: 1.3;
+      opacity: 0.85;
+      text-align: right;
     }
 
     /* ── עמוד מוצר ── */
@@ -592,8 +721,7 @@
 <nav>
   <span class="nav-logo" onclick="showPage('home')"></span>
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">אודות</a></li>
-    <li><a href="#" onclick="showPage('shop')" id="nav-shop">חנות הזרעים</a></li>
+    <li><a href="#" onclick="showPage('shop')" id="nav-shop" class="active">חנות הזרעים</a></li>
   </ul>
 </nav>
 
@@ -602,37 +730,21 @@
   <img src="Asset 1 2 copy.svg" id="fixed-logo" style="width:clamp(22px,3vw,45px);position:relative;z-index:1;">
 </div>
 
-<!-- ── עמוד הבית ── -->
-<div id="page-home" class="page active">
-  <div id="globe-wrap"><canvas id="globe-canvas"></canvas></div>
-  <div id="flower-wrap"><img id="flower-anim" src="" alt=""></div>
-  <div id="cards-frame3"><div class="cards-grid"><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div><div class="card-rect"></div></div><div class="cards-grid-back"><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div><div class="card-back"></div></div></div>
-  <img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" /><img class="seed-p" src="זרע1.png" alt="" />
-  <div id="home-scroll-space"></div>
-  <div id="text-stage">
-    <p class="frame-text" id="typewriter"></p>
-    <button class="btn-shop" id="btn-shop" onclick="showPage('shop')">לחנות הזרעים ←</button>
-  </div>
-  <div id="frame-dots">
-    <div class="frame-dot" data-idx="0"></div>
-    <div class="frame-dot" data-idx="1"></div>
-    <div class="frame-dot" data-idx="2"></div>
-    <div class="frame-dot" data-idx="3"></div>
-    <div class="frame-dot" data-idx="4"></div>
-    <div class="frame-dot" data-idx="5"></div>
-    <div class="frame-dot" data-idx="6"></div>
-  </div>
-  <div id="scroll-hint">
-    <span>גללו למטה</span>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8 3L8 13M8 13L4 9M8 13L12 9" stroke="#360EA7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</div>
 
 <!-- ── חנות הזרעים ── -->
-<div id="page-shop" class="page">
+<div id="page-shop" class="page active">
+  <div id="shop-intro">
+    <p>הגן הבוטני בגבעת רם יוצא בפרויקט הפצה של פרחי בר מקומיים, במטרה להשיב אותם חזרה לטבע בישראל. מעכשיו ניתן לרכוש ולגדל ‎24 מיני זרעי בר שנאספים, מנוקים ונארזים על ידי אנשים מקהילות שונות.</p>
+    <p>חלק מהמינים נדירים, חלקם אפילו מאוד, וחלקם על סף סכנת הכחדה (!).</p>
+    <p>כל המינים בסדרה מגיעים מאיזור אגן הים התיכון ולכן מותאמים היטב לאקלים המקומי. זאת גם הסיבה שהם קלים לגידול בארץ ומצמיחים פרחי בר חסכוניים במים, עמידים וכמובן — יפיפיים (ואנחנו אובייקטיבים!).</p>
+    <p>מוזמנים לשוטט באתר ולבחור את הפרח שלכם :)</p>
+  </div>
   <div class="seeds-grid" id="seeds-grid"></div>
+</div>
+
+<!-- פאנל פרח — מחוץ לעמוד, ברמת body -->
+<div id="shop-flower-panel">
+  <img id="shop-flower-img" src="" alt="" />
 </div>
 
 <!-- ── עמוד מוצר ── -->
@@ -654,85 +766,79 @@
 
 <script>
   const seeds = [
-    { id: 1,  img: "דונגית ארץ ישראלית.png",    name: "דּוֹנַגִּית אֶרֶץ־יִשְׂרְאֵלִית", hoverClass: "hover-yellow",  latin: "Cerinthe palaestina",          rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 2,  img: "דרדר כחול.png",              name: "דַּרְדַּר כָּחֹל",                hoverClass: "hover-pink",    latin: "Centaurea cyanoides",          rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 3,  img: "זעזועית גדולה.png",          name: "זַעְזוּעִית גְּדוֹלָה",           hoverClass: "hover-orange",  latin: "Briza maxima",                 rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
-    { id: 4,  img: "טופח ספרדי.png",             name: "טֹפַח סְפָרַדִּי",               hoverClass: "hover-yellow2", latin: "Lathyrus clymenum",            rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 5,  img: "מרוה דגולה.png",             name: "מַרְוָה דְּגוּלָה",              hoverClass: "hover-yellow",  latin: "Salvia viridis",               rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 6,  img: "מרוה כחולה.png",             name: "מַרְוָה כְּחֻלָּה",              hoverClass: "hover-yellow",  latin: "Salvia indica",                rarity: "נדיר מאוד", price: 26, season: "", habitat: "", color: "", desc: "" },
-    { id: 7,  img: "מרוות ירושלים.png",          name: "מַרְוַת יְרוּשָׁלַיִם",         hoverClass: "hover-yellow2", latin: "Salvia hierosolymitana Boiss", rarity: "",           price: 18, season: "", habitat: "", color: "", desc: "" },
-    { id: 8,  img: "מישויה פעמונית.png",         name: "מִישׁוֹיָה פַּעֲמוֹנִית",        hoverClass: "hover-magenta", latin: "Michauxia campanuloides",      rarity: "נדיר מאוד", price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 9,  img: "",                           name: "פְּרֵגָה צְהֻבָּה",             hoverClass: "hover-cyan",    latin: "Glaucium flavum",              rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 10, img: "פרג אגסי.png",               name: "פֶּרֶג אַגָּסִי",                hoverClass: "hover-yellow2", latin: "Papaver umbonatum",            rarity: "",           price: 19, season: "", habitat: "", color: "", desc: "" },
-    { id: 11, img: "",                           name: "פִּשְׁתָּנִית מְשֻׁלֶּשֶׁת",     hoverClass: "hover-magenta", latin: "Linaria triphylla",            rarity: "סכנת הכחדה", price: 32, season: "", habitat: "", color: "", desc: "" },
-    { id: 12, img: "צמרורת בואסיה2.png",         name: "צַמְרוּרַת בּוּאֶסִיָּה",        latin: "Trichodesma boissieri Post",   rarity: "נדיר",       price: 35, season: "", habitat: "", color: "", desc: "" },
-    { id: 13, img: "ציפורנית דמשקאית.png",       name: "צִפַּרְנִית דַּמַּשְׂקָאִית",    hoverClass: "hover-teal",    latin: "Silene damascena",             rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 14, img: "ציפורנית גדולה.png",         name: "צִפַּרְנִית גְּדוֹלָה",          latin: "Silene swertiifolia Boiss",    rarity: "נדיר",       price: 24, season: "", habitat: "", color: "", desc: "" },
-    { id: 15, img: "עדעד כחול.png",              name: "עַדְעַד כָּחֹל",                 hoverClass: "hover-orange",  latin: "Limonium sinuatum",            rarity: "",           price: 18, season: "", habitat: "", color: "", desc: "" },
-    { id: 16, img: "קחוון הצבעית.png",           name: "קַחְוַן הַצַּבָּעִים",         hoverClass: "hover-teal",    latin: "Anthemis tinctoria",           rarity: "נדיר",       price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 17, img: "תלתן הארגמן.png",            name: "תִּלְתָּן הָאַרְגָּמָן",          hoverClass: "hover-yellow",  latin: "Trifolium purpureum",          rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
-    { id: 18, img: "תלתן תריסני.png",            name: "תִּלְתָּן תְּרִיסָנִי",           latin: "Trifolium clypeatum",          rarity: "",           price: 22, season: "", habitat: "", color: "", desc: "" },
-    { id: 19, img: "תורמוס ההרים.png",           name: "תֻּרְמוּס הֶהָרִים",              hoverClass: "hover-pink",    latin: "Lupinus pilosus",              rarity: "",           price: 20, season: "", habitat: "", color: "", desc: "" },
+    { id: 1,  img: "אגוסטרמת השדות.png",         name: "אַגְרוֹסְטֵמַת הַשָּׂדוֹת",       hoverClass: "hover-teal", latin: "Agrostemma githago",           rarity: "סכנת הכחדה", price: 32, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים בערוגה או באדמה בעומק של 5 ס\"מ ובמרווחים של 10 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הציפורניים. השם הלטיני מורכב מיוונית – agros (שדה) ו-stemma (כתר/זר) – כלומר \"כתר השדה\". הסיבה היא שפעם הייתה נפוצה בשולי שדות." },
+    { id: 2,  img: "אפון קיפח.png",               name: "אָפוּן קִפֵּחַ",                  hoverClass: "hover-yellow2",    latin: "Pisum elatius",                rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות בערוגה או בגינה במרווחים של 20 ס\"מ זה מזה ולכסות בכ-2 ס\"מ אדמה. חשוב למקם את הזרעים קרוב לקיר, לקנים או לצמחים שכנים, על מנת לאפשר לו תמיכה קרובה לטיפוס.", desc: "מטפס חד־שנתי ממשפחת הקטניות. שמו נגזר מהמילה \"קיפח\" מהמשנה שפירושה \"גבוה מאוד\" – מכיוון שהוא מטפס לגובה של מטר ומעלה." },
+    { id: 3,  img: "דונגית ארץ ישראלית.png",    name: "דּוֹנַגִּית אֶרֶץ־יִשְׂרְאֵלִית", hoverClass: "hover-yellow",  latin: "Cerinthe palaestina",          rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 15 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הזיפניים. שמו נגזר מהשעווה (דונג) שמכסה את עליו ומונעת מטיפות מים להיספג בהם. אנדמי לישראל ולסוריה." },
+    { id: 4,  img: "דרדר כחול.png",              name: "דַּרְדַּר כָּחֹל",                hoverClass: "hover-lilac",    latin: "Centaurea cyanoides",          rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים ופרפרים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של 1 ס\"מ ובמרווחים של 20 ס\"מ אחד מהשני.", desc: "פרח חד־שנתי ממשפחת המורכבים. בניגוד למצופה, הדרדר הכחול לא קוצני בכלל אלא נעים למגע. אנדמי לישראל ולסוריה." },
+    { id: 5,  img: "זעזועית גדולה.png",          name: "זַעְזוּעִית גְּדוֹלָה",           hoverClass: "hover-orange",  latin: "Briza maxima",                 rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת הדגניים. שיבוליותיה הגדולות מתנדנדות בכל משב רוח קל ומכאן שמו. את התפרחות היבשות אפשר לשים באגרטל ללא מים לקישוט." },
+    { id: 6,  img: "חוגית תמימה.jpg",            name: "חוּגִית תְּמִימָה",               hoverClass: "hover-yellow",    latin: "Knautia integrifolia",         rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים ופרפרים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של 1.5 ס\"מ ובמרווחים של 20 ס\"מ אחד מהשני.", desc: "פרח חד־שנתי ממשפחת השלמוניים. מקור השם \"תמימה\" מתייחס לכך שעלי הצמח שלמים (\"תמימים\") ולא משוננים בשוליהם." },
+    { id: 7,  img: "טופח ספרדי.png",             name: "טֹפַח סְפָרַדִּי",               hoverClass: "hover-yellow2", latin: "Lathyrus clymenum",            rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להשרות את הזרעים במים במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, ובאלה שלא יש לחזור על הפעולה שוב עם מים חמימים. את הזרעים התפוחים יש לשתול בעומק של 1.5 ס\"מ ובמרווחים של 20 ס\"מ זה מזה. כדאי לזרוע קרוב לקיר.", desc: "פרח חד־שנתי ממשפחת הקטניות. כשחרק נוחת עליו, משקלו לוחץ על איבר שפולט אבקה על בטן החרק, ממש כמו שלוחצים על שפופרת ומשחת שיניים יוצאת מהפתח." },
+    { id: 8,  img: "יבשוש חד שנתי.png",          name: "יַבְשׁוּשׁ חַד־שְׁנָתִי",          hoverClass: "hover-lilac",    latin: "Xeranthemum annuum",           rarity: "נדיר מאוד", price: 27, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים ופרפרים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת המורכבים. קרקפותיו הקרומיות שומרות על צורתן וצבען גם כשהצמח מתייבש לגמרי, ולכן מבוקש לזרים יבשים." },
+    { id: 9,  img: "מישויה פעמונית.png",         name: "מִישׁוֹיָה פַּעֲמוֹנִית",        hoverClass: "hover-red", latin: "Michauxia campanuloides",      rarity: "נדיר מאוד", price: 27, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים באדמה מדושנת בעומק של 3 מ\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח דו-שנתי ממשפחת הפעמוניתיים. קרוי על שם הבוטנאי הצרפתי אנדרה מישו (André Michaux), שאסף את הצמח לראשונה במסעותיו במזרח התיכון במאה ה-18." },
+    { id: 10, img: "מרוה דגולה.png",             name: "מַרְוָה דְּגוּלָה",              hoverClass: "hover-yellow",  latin: "Salvia viridis",               rarity: "נדיר",       price: 22, light: "חצי צל", water: "בינונית", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה בעומק של 5 מ\"מ ובמרווחים של 15 ס\"מ זה מזה. ניתן להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה, עד לקבלת שתילים מפותחים ורק לאחר מכן לשתול ישירות באדמה.", desc: "פרח חד־שנתי ממשפחת השפתניים. מקור השם \"דגולה\" נגזר מהמילה \"דגל\" – ומתייחס לצרור החפים הסגולים הבולט שמתנוסס בראש התפרחת כמו דגל." },
+    { id: 11, img: "מרוה כחולה.png",             name: "מַרְוָה כְּחֻלָּה",              hoverClass: "hover-yellow",  latin: "Salvia indica",                rarity: "נדיר מאוד", price: 27, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח עשבוני רב־שנתי ממשפחת השפתניים. שמה מתאר את שילוב הגוונים הכחולים בפרח שנראה מרחוק ככחול אחיד." },
+    { id: 26, img: "מרוה מרושתת.png",         name: "מַרְוָה מְרֻשֶּׁתֶת",            hoverClass: "hover-yellow",  latin: "Salvia sclarea",               rarity: "סכנת הכחדה", price: 32, light: "שטוף שמש", water: "נמוכה עד בינונית", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים בערוגה או באדמה בעומק של 1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח רב־שנתי עשבוני ממשפחת השפתניים. מהזרעים שלה מפיקים שמן עתיר באומגה 3." },
+    { id: 12, img: "מרות ירושלים.png",           name: "מַרְוַת יְרוּשָׁלַיִם",         hoverClass: "hover-yellow2", latin: "Salvia hierosolymitana Boiss", rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח עשבוני רב־שנתי ממשפחת השפתניים. תת-אנדמית לארץ ישראל. גוון הפרחים משתנה מבורדו בדרום הארץ לווורוד בצפונה." },
+    { id: 13, img: "עדעד כחול.png",              name: "עַדְעַד כָּחֹל",                 hoverClass: "hover-orange",  latin: "Limonium sinuatum",            rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה עד בינונית", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות בערוגה או בגינה במרווחים של 30 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "רב־שנתי עשבוני ממשפחת העופריתיים. הגביע הכחול-סגול נשאר צבעוני זמן רב אחרי שהכותרת נושרת ואינו נובל – ומכאן שמו ('עדי-עד')." },
+    { id: 14, img: "פרג אגסי.png",               name: "פֶּרֶג אַגָּסִי",                hoverClass: "hover-yellow2", latin: "Papaver umbonatum",            rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של לפחות 0.5 ס\"מ ובמרווחים של 10 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הפרגיים. שמו ניתן לו בשל עלי הגביע שלו, ההופכים בעת הבשלת הפרי למעין \"תריס\" המגן על הזרעים." },
+    { id: 15, img: "פרגה צהובה.png",             name: "פְּרֵגָה צְהֻבָּה",             hoverClass: "hover-teal",    latin: "Glaucium flavum",              rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים וזבובים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח דו-שנתי ממשפחת הפרגיים. כמו שאר בני משפחתו, עלי הכותרת שלו נפתחים בבוקר ונושרים באותו היום. כל איבריו רעילים." },
+    { id: 25, img: "פשתה צרת־עלים.jpg",          name: "פִּשְׁתָּה צָרַת־עָלִים",         hoverClass: "hover-lilac",    latin: "Linum bienne",                 rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הפשתיים. אב הבר של הפשתה התרבותית, ממנה מייצרים את בד הפשתן." },
+    { id: 16, img: "פשתנית משולשת.png",           name: "פִּשְׁתָּנִית מְשֻׁלֶּשֶׁת",     hoverClass: "hover-red", latin: "Linaria triphylla",            rarity: "סכנת הכחדה", price: 32, light: "", water: "", pollination: "", growing: "", desc: "" },
+    { id: 17, img: "צמרורת בואסיה2.png",         name: "צַמְרוּרַת בּוּאֶסִיָּה",        hoverClass: "hover-orange",  latin: "Trichodesma boissieri Post",   rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח רב־שנתי ממשפחת הזיפניים. קרוי על שם הבוטנאי השווייצרי אדמונד בואסייה, שחקר את צמחיית המזרח התיכון במאה ה-19. אנדמי לישראל בלבד." },
+    { id: 18, img: "ציפורנית גדולה.png",         name: "צִפַּרְנִית גְּדוֹלָה",          hoverClass: "hover-red",    latin: "Silene swertiifolia Boiss",    rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י פרפרים ורפרפים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח עשבוני רב־שנתי ממשפחת הקטניות. פרחיה הלבנים נפתחים רק בלילה, ומקבלים את פני המבקרים דווקא לעת ערב." },
+    { id: 19, img: "ציפורנית דמשקאית.png",       name: "צִפַּרְנִית דַּמַּשְׂקָאִית",    hoverClass: "hover-teal",    latin: "Silene damascena",             rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת הציפורניים. מקור השם \"דמשקאית\" מתייחס לתפוצתה הגאוגרפית לכיוון אזור דמשק וסוריה." },
+    { id: 20, img: "קחוון הגליל.jpg",            name: "קַחְוַן הַגָּלִיל",              hoverClass: "hover-red",  latin: "Anthemis bornmuelleri",        rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ אחד מהשני.", desc: "פרח חד־שנתי ממשפחת המורכבים. הוא מרוכז בעיקר באזורי הגליל, הגולן והכרמל ומכאן שמו. תת-אנדמי לישראל ולסוריה." },
+    { id: 21, img: "קחוון הצבעית.png",           name: "קַחְוַן הַצַּבָּעִים",           hoverClass: "hover-teal",    latin: "Anthemis tinctoria",           rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח רב־שנתי עשבוני ממשפחת המורכבים. שמו מתייחס לשימוש היסטורי בפרחיו בצבע טבעי לצמר באירופה." },
+    { id: 22, img: "תלתן הארגמן.png",            name: "תִּלְתָּן הָאַרְגָּמָן",          hoverClass: "hover-yellow",  latin: "Trifolium purpureum",          rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הקטניות. כמו קטניות רבות, משביח ('מדשן') את הקרקע לעצמו ולצמחים הסמוכים." },
+    { id: 23, img: "תלתן תריסני.png",            name: "תִּלְתָּן תְּרִיסָנִי",           hoverClass: "hover-teal",    latin: "Trifolium clypeatum",          rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הקטניות. שמו ניתן לו בשל עלי הגביע שלו, ההופכים בעת הבשלת הפרי למעין \"תריס\" המגן על הזרעים." },
+    { id: 24, img: "תורמוס ההרים.png",           name: "תֻּרְמוּס הֶהָרִים",              hoverClass: "hover-lilac",    latin: "Lupinus pilosus",              rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להשרות את הזרעים במים במשך 12 שעות. לאחר מכן יש לשתול את הזרעים בערוגה או באדמה בעומק של 1 ס\"מ ובמרווחים של 20 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הקטניות. שמו המדעי Lupinus בא מ\"זאב\" בלטינית, כי האמינו בטעות שהוא מרוקן את הקרקע ממינרלים כמו זאב טורף, בעוד שבפועל הוא דווקא מעשיר אותה בחנקן." },
   ];
 
-  // ── flower peek on hover ──
-  const PEEK_H = 180;
-  const peekWrap = document.createElement('div');
-  peekWrap.id = 'flower-peek-wrap';
-  peekWrap.style.cssText = 'position:fixed;overflow:hidden;pointer-events:none;z-index:50;height:'+PEEK_H+'px;';
-  const peekImg = document.createElement('img');
-  peekImg.style.cssText = 'position:absolute;top:0;left:50%;height:360px;width:auto;object-fit:contain;object-position:top;transform:translateX(-50%) translateY('+PEEK_H+'px);';
-  peekWrap.appendChild(peekImg);
-  document.body.appendChild(peekWrap);
-
-  let _peekRaf = null;
-  let _peekVisible = false;
+  // ── flower panel on hover ──
+  const panelImg = document.getElementById('shop-flower-img');
 
   function showFlowerPeek(card) {
-    if (_peekRaf) { cancelAnimationFrame(_peekRaf); _peekRaf = null; }
     const src = card.dataset.img;
     if (!src) return;
-    const rect   = card.getBoundingClientRect();
-    const latinR = card.querySelector('.latin').getBoundingClientRect();
-    const priceR = card.querySelector('.tag.price').getBoundingClientRect();
-    // reposition instantly (no transition on wrapper)
-    peekWrap.style.left   = priceR.left + 'px';
-    peekWrap.style.width  = (latinR.right - priceR.left) + 'px';
-    peekWrap.style.bottom = (window.innerHeight - rect.bottom) + 'px';
-    peekWrap.style.top    = '';
-    // snap image to start position, then animate up
-    peekImg.src = src;
-    peekImg.style.transition = 'none';
-    peekImg.style.transform  = 'translateX(-50%) translateY('+PEEK_H+'px)';
-    _peekRaf = requestAnimationFrame(() => {
-      _peekRaf = requestAnimationFrame(() => {
-        peekImg.style.transition = 'transform 0.4s cubic-bezier(0.22,1,0.36,1)';
-        peekImg.style.transform  = 'translateX(-50%) translateY(0)';
-        _peekRaf = null;
-        _peekVisible = true;
-      });
-    });
+    panelImg.src = src;
+    panelImg.style.opacity = '1';
   }
 
   function hideFlowerPeek() {
-    if (_peekRaf) { cancelAnimationFrame(_peekRaf); _peekRaf = null; }
-    peekImg.style.transition = 'transform 0.25s ease-in';
-    peekImg.style.transform  = 'translateX(-50%) translateY('+PEEK_H+'px)';
-    _peekVisible = false;
+    panelImg.style.opacity = '0';
+  }
+
+  function toggleCard(el) {
+    el.classList.toggle('expanded');
   }
 
   function renderShop() {
     const grid = document.getElementById('seeds-grid');
     grid.innerHTML = seeds.map(s => `
       <div class="seed-card${s.hoverClass ? ' ' + s.hoverClass : ''}"
-           onclick="showProduct(${s.id})"
-           ${s.img ? `data-img="${s.img}" onmouseenter="showFlowerPeek(this)" onmouseleave="hideFlowerPeek()"` : ''}>
-        <div class="seed-card-name-col">
-          <div class="seed-card-name">${s.name}</div>
-          ${s.rarity ? `<span class="tag rarity">${s.rarity}</span>` : ''}
+           onclick="toggleCard(this)"
+           data-img="${s.img || ''}"
+           onmouseenter="if(this.dataset.img) showFlowerPeek(this)"
+           onmouseleave="hideFlowerPeek()">
+        <div class="seed-card-row">
+          <div class="seed-card-name-col">
+            <div class="seed-card-name">${s.name}</div>
+          </div>
+          <p class="latin">${s.latin}</p>
+          <span class="tag rarity-col">${s.rarity || ''}</span>
+          <span class="tag price">${s.price}₪</span>
         </div>
-        <p class="latin">${s.latin}</p>
-        <span class="tag price">${s.price}₪</span>
+        <div class="seed-details">
+          <div class="seed-details-inner">
+            ${s.desc ? `<p class="seed-details-desc">${s.desc}</p>` : ''}
+            <table class="seed-details-table">
+              <tr><td>תנאי אור</td><td>${s.light || '—'}</td></tr>
+              <tr><td>צריכת מים</td><td>${s.water || '—'}</td></tr>
+              <tr><td>האבקה</td><td>${s.pollination || '—'}</td></tr>
+              <tr><td>הוראות גידול</td><td>${s.growing || '—'}</td></tr>
+            </table>
+          </div>
+        </div>
       </div>
     `).join('');
   }
@@ -767,11 +873,13 @@
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     const navEl = document.getElementById('nav-' + (name === 'product' ? 'shop' : name));
     if (navEl) navEl.classList.add('active');
-    document.getElementById('frame-dots').style.display = name === 'home' ? '' : 'none';
+    document.getElementById('shop-flower-panel').style.display = name === 'shop' ? 'flex' : 'none';
+    if (name !== 'shop') hideFlowerPeek();
     window.scrollTo(0, 0);
   }
 
   renderShop();
+  document.getElementById('shop-flower-panel').style.display = 'flex';
 
   // ── Fixed-stage scroll typewriter ──
   const sentences = [
