@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>פרחי הבר — זרעים מהטבע הישראלי</title>
   <style>
-    @font-face {
-      font-family: 'Narkiss Yair Variable';
-      src: url('NarkissYair-Variable-TRIAL.ttf') format('truetype');
-      font-weight: 100 900;
-    }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -24,7 +19,7 @@
     }
 
     body {
-      font-family: 'Narkiss Yair Variable', serif;
+      font-family: "narkiss-yair-variable", serif;
       background-color: var(--cream);
       color: var(--text);
       min-height: 100vh;
@@ -45,7 +40,7 @@
 
     .nav-logo {
       color: var(--cream);
-      font-size: 1.25rem;
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
       letter-spacing: 0.05em;
       cursor: pointer;
     }
@@ -59,7 +54,7 @@
     .nav-links a {
       color: var(--sand);
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
       letter-spacing: 0.03em;
       transition: color 0.2s;
     }
@@ -113,7 +108,7 @@
       color: #fff;
       border: none;
       padding: 0.85rem 2.5rem;
-      font-family: 'Narkiss Yair Variable', serif;
+      font-family: "narkiss-yair-variable", serif;
       font-size: 1rem;
       border-radius: 0;
       cursor: pointer;
@@ -280,7 +275,7 @@
     }
 
     .seed-card-name {
-      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-size: clamp(2rem, 4vw, 3.5rem);
       font-weight: 400;
       color: #360EA7;
       line-height: 1.2;
@@ -291,7 +286,7 @@
     .seed-card .latin {
       flex: 0 0 30%;
       font-style: italic;
-      font-size: clamp(0.75rem, 1.2vw, 1rem);
+      font-size: clamp(0.7rem, 1vw, 0.85rem);
       color: #360EA7;
       text-align: right;
       white-space: nowrap;
@@ -309,7 +304,7 @@
     .seed-card .tag.rarity-col {
       flex: 0 0 auto;
       font-weight: 600;
-      font-size: 0.78rem;
+      font-size: clamp(0.7rem, 1vw, 0.85rem);
       white-space: nowrap;
       padding-left: 2rem;
       padding-right: 2rem;
@@ -319,7 +314,7 @@
     .seed-card .tag.price {
       flex: 0 0 auto;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
       margin-right: auto;
       padding-left: 1rem;
       white-space: nowrap;
@@ -349,7 +344,7 @@
     .seed-details-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+      font-size: clamp(0.7rem, 1vw, 0.85rem);
       color: #360EA7;
     }
 
@@ -374,7 +369,7 @@
     .seed-details-desc {
       margin-bottom: 1.5rem;
       max-width: 33.333vw;
-      font-size: clamp(1.6rem, 2.2vw, 1.9rem);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
       font-weight: 700;
       line-height: 1.3;
       opacity: 0.85;
@@ -403,7 +398,7 @@
       background: none;
       border: 1px solid var(--sage);
       color: var(--sage);
-      font-family: 'Narkiss Yair Variable', serif;
+      font-family: "narkiss-yair-variable", serif;
       padding: 0.4rem 1rem;
       border-radius: 0;
       cursor: pointer;
@@ -434,7 +429,7 @@
       display: flex;
       justify-content: space-between;
       padding: 0.65rem 0;
-      font-size: 0.95rem;
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
       border-bottom: 1px solid var(--sage);
     }
 
@@ -530,7 +525,7 @@
     }
 
     .frame-text {
-      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-size: clamp(2rem, 4vw, 3.5rem);
       color: var(--text);
       text-align: right;
       width: 100%;
@@ -653,7 +648,7 @@
       clip-path: polygon(50% 50%, 50% 0%, 50% 0%);
     }
     .card-label span {
-      font-family: 'Narkiss Yair Variable', serif;
+      font-family: "narkiss-yair-variable", serif;
       font-size: clamp(9px, 1.2vw, 18px);
       color: #360EA7;
       position: relative;
@@ -694,7 +689,7 @@
       color: #fff;
       border: none;
       padding: 0.85rem 2.5rem;
-      font-family: 'Narkiss Yair Variable', serif;
+      font-family: "narkiss-yair-variable", serif;
       font-size: 1rem;
       border-radius: 0;
       cursor: pointer;
@@ -715,6 +710,7 @@
       transform: translateY(-1px);
     }
   </style>
+  <link rel="stylesheet" href="https://use.typekit.net/tfh3ypu.css">
 </head>
 <body>
 
@@ -783,7 +779,6 @@
     { id: 14, img: "פרג אגסי.png",               name: "פֶּרֶג אַגָּסִי",                hoverClass: "hover-yellow2", latin: "Papaver umbonatum",            rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של לפחות 0.5 ס\"מ ובמרווחים של 10 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הפרגיים. שמו ניתן לו בשל עלי הגביע שלו, ההופכים בעת הבשלת הפרי למעין \"תריס\" המגן על הזרעים." },
     { id: 15, img: "פרגה צהובה.png",             name: "פְּרֵגָה צְהֻבָּה",             hoverClass: "hover-teal",    latin: "Glaucium flavum",              rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים וזבובים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח דו-שנתי ממשפחת הפרגיים. כמו שאר בני משפחתו, עלי הכותרת שלו נפתחים בבוקר ונושרים באותו היום. כל איבריו רעילים." },
     { id: 25, img: "פשתה צרת־עלים.jpg",          name: "פִּשְׁתָּה צָרַת־עָלִים",         hoverClass: "hover-lilac",    latin: "Linum bienne",                 rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הפשתיים. אב הבר של הפשתה התרבותית, ממנה מייצרים את בד הפשתן." },
-    { id: 16, img: "פשתנית משולשת.png",           name: "פִּשְׁתָּנִית מְשֻׁלֶּשֶׁת",     hoverClass: "hover-red", latin: "Linaria triphylla",            rarity: "סכנת הכחדה", price: 32, light: "", water: "", pollination: "", growing: "", desc: "" },
     { id: 17, img: "צמרורת בואסיה2.png",         name: "צַמְרוּרַת בּוּאֶסִיָּה",        hoverClass: "hover-orange",  latin: "Trichodesma boissieri Post",   rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח רב־שנתי ממשפחת הזיפניים. קרוי על שם הבוטנאי השווייצרי אדמונד בואסייה, שחקר את צמחיית המזרח התיכון במאה ה-19. אנדמי לישראל בלבד." },
     { id: 18, img: "ציפורנית גדולה.png",         name: "צִפַּרְנִית גְּדוֹלָה",          hoverClass: "hover-red",    latin: "Silene swertiifolia Boiss",    rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י פרפרים ורפרפים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח עשבוני רב־שנתי ממשפחת הקטניות. פרחיה הלבנים נפתחים רק בלילה, ומקבלים את פני המבקרים דווקא לעת ערב." },
     { id: 19, img: "ציפורנית דמשקאית.png",       name: "צִפַּרְנִית דַּמַּשְׂקָאִית",    hoverClass: "hover-teal",    latin: "Silene damascena",             rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת הציפורניים. מקור השם \"דמשקאית\" מתייחס לתפוצתה הגאוגרפית לכיוון אזור דמשק וסוריה." },
