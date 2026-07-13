@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>פרחי הבר — זרעים מהטבע הישראלי</title>
+  <title>חנות הזרעים של הגן הבוטני</title>
   <style>
 
     @font-face {
@@ -298,7 +298,7 @@
     .seed-card-row {
       display: flex;
       align-items: center;
-      padding: 1.1rem 10rem;
+      padding: 1.1rem 4.67rem 1.1rem 16rem;
       width: 100%;
     }
 
@@ -340,6 +340,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       min-width: 0;
+      margin-left: auto;
     }
 
     .seed-card-name {
@@ -353,15 +354,11 @@
     .seed-card-name-row { display: contents; }
 
     .seed-card .latin {
-      flex: 0 0 30%;
       font-style: italic;
       font-size: clamp(1rem, 1.575vw, 1.24rem);
       color: #360EA7;
       text-align: right;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
+      margin: 0;
     }
 
     .seed-card .tag {
@@ -384,7 +381,6 @@
       flex: 0 0 auto;
       font-weight: 400;
       font-size: clamp(1rem, 1.575vw, 1.24rem);
-      margin-right: auto;
       padding-left: 1rem;
       white-space: nowrap;
     }
@@ -841,8 +837,7 @@
 <nav>
   <span class="nav-logo" onclick="showPage('home')"></span>
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('about')" id="nav-about">אודות</a></li>
-    <li><a href="#" onclick="showPage('shop')" id="nav-shop" class="active">חנות הזרעים</a></li>
+    <li><a href="#" onclick="showPage('shop')" id="nav-shop" class="active">חנות הזרעים של הגן הבוטני</a></li>
   </ul>
 </nav>
 
@@ -853,16 +848,6 @@
 
 
 <!-- ── עמוד אודות ── -->
-<div id="page-about" class="page">
-  <div style="width:66.666%;margin-right:0;margin-left:auto;padding:6rem 4rem;direction:rtl;">
-    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1.25rem,2.2vw,1.9rem);font-weight:400;line-height:1.4;margin:0 0 1.5rem;">הגן הבוטני בגבעת רם יוצא בפרויקט הפצה של פרחי בר מקומיים, במטרה להשיב אותם חזרה לטבע בישראל.</p>
-    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1.25rem,2.2vw,1.9rem);font-weight:400;line-height:1.4;margin:0 0 1.5rem;">מעכשיו ניתן לרכוש ולגדל ‎24 מיני זרעי בר שנאספים, מנוקים ונארזים על ידי אנשים מקהילות שונות.</p>
-    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1.25rem,2.2vw,1.9rem);font-weight:400;line-height:1.4;margin:0 0 1.5rem;">חלק מהמינים נדירים, חלקם אפילו מאוד, וחלקם על סף סכנת הכחדה (!).</p>
-    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1.25rem,2.2vw,1.9rem);font-weight:400;line-height:1.4;margin:0 0 2.5rem;">כל המינים בסדרה מגיעים מאיזור אגן הים התיכון ולכן מותאמים היטב לאקלים המקומי. זאת גם הסיבה שהם קלים לגידול בארץ ומצמיחים פרחי בר חסכוניים במים, עמידים וכמובן — יפיפיים (ואנחנו אובייקטיבים!).</p>
-    <button onclick="showPage('shop')" style="background:#360EA7;color:white;border:1px solid #360EA7;padding:0.85rem 2.5rem;font-family:'narkiss-yair-variable',serif;font-size:clamp(1rem,1.5vw,1.3rem);font-weight:400;border-radius:2rem;cursor:pointer;transition:font-weight 0.15s;" onmouseover="this.style.letterSpacing='0.25rem'" onmouseout="this.style.letterSpacing=''">לחנות הזרעים</button>
-  </div>
-</div>
-
 <!-- ── חנות הזרעים ── -->
 <div id="page-shop" class="page active">
   <div class="seeds-grid" id="seeds-grid"></div>
@@ -963,7 +948,6 @@
           <div class="seed-card-name-col">
             <div class="seed-card-name">${s.name}</div>
           </div>
-          <p class="latin">${s.latin}</p>
           <span class="tag rarity-col" data-rarity="${s.rarity || ''}">${s.rarity || ''}</span>
           <span class="tag price">${s.price}₪</span>
         </div>
@@ -1045,8 +1029,7 @@
 
   // restore state from hash
   const hash = location.hash.replace('#', '');
-  if (hash === 'about') showPage('about');
-  else if (hash.startsWith('product-')) {
+  if (hash.startsWith('product-')) {
     const id = parseInt(hash.replace('product-', ''));
     if (!isNaN(id)) showProduct(id);
   }
