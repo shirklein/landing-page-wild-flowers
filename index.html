@@ -49,14 +49,20 @@
     /* ── ניווט ── */
     nav {
       background-color: var(--dark-sage);
-      padding: 0 2rem;
+      padding: 0;
+      padding: 0 0 2rem 0;
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      height: 64px;
-      position: sticky;
+      width: 64px;
+      height: 100vh;
+      position: fixed;
+      right: 0;
       top: 0;
       z-index: 100;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      cursor: default;
     }
 
     .nav-logo {
@@ -78,6 +84,7 @@
       font-size: clamp(0.9rem, 1.4vw, 1.1rem);
       letter-spacing: 0.03em;
       transition: color 0.2s;
+      cursor: default;
     }
 
     .nav-links a:hover,
@@ -248,7 +255,7 @@
       height: 220px;
       object-fit: contain;
       opacity: 0;
-      transform: translate(-120%, -50%);
+      transform: translate(-210%, -50%);
       transition: opacity 0.15s;
     }
 
@@ -298,8 +305,9 @@
     .seed-card-row {
       display: flex;
       align-items: center;
-      padding: 1.1rem 4.67rem 1.1rem 16rem;
+      padding: 1.1rem 9rem 1.1rem 22rem;
       width: 100%;
+      position: relative;
     }
 
     .seed-card:hover {
@@ -319,7 +327,9 @@
     .seed-card.hover-magenta:hover .tag,
     .seed-card.hover-magenta.expanded .tag,
     .seed-card.hover-magenta:hover .seed-details-table td,
-    .seed-card.hover-magenta.expanded .seed-details-table td { color: white; }
+    .seed-card.hover-magenta.expanded .seed-details-table td,
+    .seed-card.hover-magenta:hover .seed-card-price,
+    .seed-card.hover-magenta.expanded .seed-card-price { color: white; }
     .seed-card.hover-cyan:hover,    .seed-card.hover-cyan.expanded    { background: #00CCF0; }
     .seed-card.hover-lilac:hover,   .seed-card.hover-lilac.expanded   { background: #FE98D6; }
     .seed-card.hover-red:hover,     .seed-card.hover-red.expanded     { background: #eb4164; color: white; }
@@ -330,17 +340,15 @@
     .seed-card.hover-red:hover .tag,
     .seed-card.hover-red.expanded .tag,
     .seed-card.hover-red:hover .seed-details-table td,
-    .seed-card.hover-red.expanded .seed-details-table td { color: white; }
+    .seed-card.hover-red.expanded .seed-details-table td,
+    .seed-card.hover-red:hover .seed-card-price,
+    .seed-card.hover-red.expanded .seed-card-price { color: white; }
 
 
 .seed-card-name-col {
-      flex: 0 0 42%;
+      flex: 0 0 auto;
       text-align: right;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-      margin-left: auto;
     }
 
     .seed-card-name {
@@ -367,6 +375,47 @@
       white-space: nowrap;
     }
 
+    .seed-card-price {
+      font-family: "narkiss-yair-variable", serif;
+      font-size: clamp(3rem, 5vw, 4rem);
+      font-weight: 400;
+      color: #360EA7;
+      position: absolute;
+      left: 6.5rem;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .seed-card:hover .seed-card-price,
+    .seed-card.expanded .seed-card-price { opacity: 1; }
+
+    .seed-card-add-btn {
+      background: #360EA7;
+      color: white;
+      border: 1px solid #360EA7;
+      padding: 0.85rem 1.5rem;
+      font-family: "narkiss-yair-variable", serif;
+      font-size: 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: letter-spacing 0.15s;
+      width: fit-content;
+      margin-right: auto;
+      opacity: 0;
+    }
+    .seed-card:hover .seed-card-add-btn,
+    .seed-card.expanded .seed-card-add-btn { opacity: 1; }
+    .seed-card-add-btn:hover { letter-spacing: 0.2rem; }
+
+    .seed-card.hover-red:hover .seed-card-add-btn,
+    .seed-card.hover-red.expanded .seed-card-add-btn,
+    .seed-card.hover-magenta:hover .seed-card-add-btn,
+    .seed-card.hover-magenta.expanded .seed-card-add-btn {
+      background: white;
+      color: #360EA7;
+      border-color: white;
+    }
+
     .seed-card .tag.rarity-col {
       flex: 0 0 auto;
       font-weight: 400;
@@ -375,6 +424,7 @@
       padding-left: 2rem;
       padding-right: 2rem;
       color: #360EA7;
+      margin-left: auto;
     }
 
     .seed-card .tag.price {
@@ -946,10 +996,10 @@
            onmouseleave="hideFlowerPeek()">
         <div class="seed-card-row">
           <div class="seed-card-name-col">
-            <div class="seed-card-name">${s.name}</div>
+            <div class="seed-card-name">${s.name}${s.rarity ? `<span class="tag rarity-col" data-rarity="${s.rarity}" style="font-family:'narkiss-yair-variable',serif;font-size:clamp(1rem,1.575vw,1.24rem);font-weight:400;margin-right:0.75rem;vertical-align:middle;">${s.rarity}</span>` : ''}</div>
           </div>
-          <span class="tag rarity-col" data-rarity="${s.rarity || ''}">${s.rarity || ''}</span>
-          <span class="tag price">${s.price}₪</span>
+          <span class="seed-card-price">${s.price}₪</span>
+          <button class="seed-card-add-btn" onclick="event.stopPropagation()">הוספה לסל</button>
         </div>
       </div>
     `).join('');
@@ -1000,7 +1050,7 @@
     const others = seeds.filter(x => x.id !== s.id && x.icon);
     const count = 2 + Math.floor(Math.random() * 3);
     const picks = others.sort(() => Math.random() - 0.5).slice(0, count);
-    const chipColor = lightOnDark ? 'white' : '#360EA7';
+    const chipColor = '#360EA7';
     document.getElementById('product-pairings').innerHTML = `
       <span class="pairings-label">משתלב טוב עם</span>
       <div class="pairings-chips">
