@@ -105,7 +105,7 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       padding: 0.35rem 1rem;
-      border-radius: 0;
+      border-radius: 2rem;
       margin-bottom: 1.5rem;
     }
 
@@ -125,23 +125,22 @@
     }
 
     .btn-primary {
-      background: transparent;
-      color: #360EA7;
+      background: #360EA7;
+      color: white;
       border: 1px solid #360EA7;
-      padding: 0.85rem 2.5rem;
+      padding: 0.85rem 1.5rem;
       font-family: "narkiss-yair-variable", serif;
       font-size: 1rem;
-      border-radius: 0;
+      border-radius: 2rem;
       cursor: pointer;
       letter-spacing: 0.05em;
-      transition: background 0.2s, color 0.2s;
-      width: 50%;
+      transition: letter-spacing 0.15s;
+      width: fit-content;
       align-self: flex-end;
     }
 
     .btn-primary:hover {
-      background: #360EA7;
-      color: white;
+      letter-spacing: 0.2rem;
     }
 
     .pairings-row {
@@ -158,24 +157,34 @@
     }
     .pairings-chips {
       display: flex;
-      gap: 0.5rem;
+      gap: 1.5rem;
       flex-wrap: wrap;
     }
     .pairings-chips .pairing-chip {
-      flex: 1;
+      flex: none;
     }
     .pairing-chip {
       font-family: "narkiss-yair-variable", serif;
       font-size: clamp(1rem, 1.575vw, 1.24rem);
       font-weight: 400;
       color: #360EA7;
-      padding: 1.8rem 5.4rem;
+      padding: 0.1rem 1rem;
       cursor: pointer;
-      border: none;
-      background: transparent;
-      transition: opacity 0.15s;
+      border: 1px solid #360EA7;
+      background: white;
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: letter-spacing 0.15s;
     }
-    .pairing-chip:hover { opacity: 0.7; }
+    .pairing-chip img {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .pairing-chip:hover { letter-spacing: 0.2rem; }
 
     .about-section {
       max-width: 760px;
@@ -209,7 +218,7 @@
     .value-card {
       background: #fff;
       border: 1px solid var(--sand);
-      border-radius: 0;
+      border-radius: 2rem;
       padding: 1.5rem;
       text-align: center;
     }
@@ -370,37 +379,6 @@
       padding-right: 2rem;
       color: #360EA7;
     }
-    .seed-card .tag.rarity-col:not(:empty),
-    #product-rarity:not(:empty) {
-      position: relative;
-      padding: 0.4em 1.2em;
-    }
-    .seed-card .tag.rarity-col:not([data-rarity="נדיר"]):not([data-rarity="נדיר מאוד"]):not(:empty)::before,
-    #product-rarity:not([data-rarity="נדיר"]):not([data-rarity="נדיר מאוד"]):not(:empty)::before {
-      content: '';
-      position: absolute;
-      inset: -70% -40% -20% -40%;
-      background-image: url("הקפה בעט סגול.png");
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      pointer-events: none;
-    }
-    .seed-card .tag.rarity-col[data-rarity="נדיר"],
-    #product-rarity[data-rarity="נדיר"] {
-      background-image: url("קו הדגשה סגול.png");
-      background-size: 120% 18px;
-      background-position: bottom center;
-      background-repeat: no-repeat;
-      padding: 0.1em 0.5em 0.6em;
-    }
-    .seed-card .tag.rarity-col[data-rarity="נדיר מאוד"],
-    #product-rarity[data-rarity="נדיר מאוד"] {
-      background-image: url("קווי הדגשה סגול.png");
-      background-size: 120% 48px;
-      background-position: bottom center;
-      background-repeat: no-repeat;
-      padding: 0.1em 0.5em 1.8em;
-    }
 
     .seed-card .tag.price {
       flex: 0 0 auto;
@@ -493,20 +471,23 @@
     }
 
     .product-back button {
-      background: transparent;
-      border: 1px solid currentColor;
-      color: var(--sage);
+      background: #360EA7;
+      border: 1px solid #360EA7;
+      color: white;
       font-family: "narkiss-yair-variable", serif;
-      padding: 0.4rem 1rem;
-      border-radius: 0;
+      padding: 0;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
       cursor: pointer;
-      font-size: 0.9rem;
-      transition: background 0.2s, color 0.2s;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: letter-spacing 0.15s;
     }
     .product-back button:hover {
-      background: #360EA7;
-      color: white;
-      border-color: #360EA7;
+      letter-spacing: 0.2rem;
     }
 
     .product-latin-top {
@@ -574,17 +555,14 @@
     .product-right.light-on-dark .details-list li { color: white; border-color: rgba(255,255,255,0.4); }
 
     .product-right.light-on-dark .product-back button {
+      background: white;
       border-color: white;
-      color: white;
+      color: #360EA7;
     }
     .product-right.light-on-dark .btn-primary {
-      background: transparent;
-      color: white;
-      border-color: white;
-    }
-    .product-right.light-on-dark .btn-primary:hover {
       background: white;
       color: #360EA7;
+      border-color: white;
     }
 
     footer {
@@ -837,7 +815,7 @@
       padding: 0.85rem 2.5rem;
       font-family: "narkiss-yair-variable", serif;
       font-size: 1rem;
-      border-radius: 0;
+      border-radius: 2rem;
       cursor: pointer;
       letter-spacing: 0.05em;
       margin-top: 2rem;
@@ -876,11 +854,12 @@
 
 <!-- ── עמוד אודות ── -->
 <div id="page-about" class="page">
-  <p style="color:#360EA7;font-family:'oron-tzar',serif;font-size:clamp(4rem,8vw,7rem);font-weight:400;line-height:1.053;margin:0;padding:6rem 4rem 0.5rem;direction:rtl;">הגן הבוטני בגבעת רם יוצא בפרויקט הפצה של פרחי בר מקומיים, במטרה להשיב אותם חזרה לטבע בישראל.</p>
-  <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1rem,2vw,1.75rem);font-weight:400;line-height:1.3;margin:0;padding:0 4rem 2rem;direction:rtl;">מעכשיו ניתן לרכוש ולגדל ‎24 מיני זרעי בר שנאספים, מנוקים ונארזים על ידי אנשים מקהילות שונות.</p>
-  <div style="width:50%;margin-right:0;margin-left:auto;padding:0 4rem 6rem;direction:rtl;">
-    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1rem,2vw,1.75rem);font-weight:400;line-height:1.3;margin:0 0 1rem;">חלק מהמינים נדירים, חלקם אפילו מאוד, וחלקם על סף סכנת הכחדה (!).</p>
-    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1rem,2vw,1.75rem);font-weight:400;line-height:1.3;margin:0;">כל המינים בסדרה מגיעים מאיזור אגן הים התיכון ולכן מותאמים היטב לאקלים המקומי. זאת גם הסיבה שהם קלים לגידול בארץ ומצמיחים פרחי בר חסכוניים במים, עמידים וכמובן — יפיפיים (ואנחנו אובייקטיבים!).</p>
+  <div style="width:66.666%;margin-right:0;margin-left:auto;padding:6rem 4rem;direction:rtl;">
+    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1.25rem,2.2vw,1.9rem);font-weight:400;line-height:1.4;margin:0 0 1.5rem;">הגן הבוטני בגבעת רם יוצא בפרויקט הפצה של פרחי בר מקומיים, במטרה להשיב אותם חזרה לטבע בישראל.</p>
+    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1.25rem,2.2vw,1.9rem);font-weight:400;line-height:1.4;margin:0 0 1.5rem;">מעכשיו ניתן לרכוש ולגדל ‎24 מיני זרעי בר שנאספים, מנוקים ונארזים על ידי אנשים מקהילות שונות.</p>
+    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1.25rem,2.2vw,1.9rem);font-weight:400;line-height:1.4;margin:0 0 1.5rem;">חלק מהמינים נדירים, חלקם אפילו מאוד, וחלקם על סף סכנת הכחדה (!).</p>
+    <p style="color:#360EA7;font-family:'narkiss-yair-variable',serif;font-size:clamp(1.25rem,2.2vw,1.9rem);font-weight:400;line-height:1.4;margin:0 0 2.5rem;">כל המינים בסדרה מגיעים מאיזור אגן הים התיכון ולכן מותאמים היטב לאקלים המקומי. זאת גם הסיבה שהם קלים לגידול בארץ ומצמיחים פרחי בר חסכוניים במים, עמידים וכמובן — יפיפיים (ואנחנו אובייקטיבים!).</p>
+    <button onclick="showPage('shop')" style="background:#360EA7;color:white;border:1px solid #360EA7;padding:0.85rem 2.5rem;font-family:'narkiss-yair-variable',serif;font-size:clamp(1rem,1.5vw,1.3rem);font-weight:400;border-radius:2rem;cursor:pointer;transition:font-weight 0.15s;" onmouseover="this.style.letterSpacing='0.25rem'" onmouseout="this.style.letterSpacing=''">לחנות הזרעים</button>
   </div>
 </div>
 
@@ -924,29 +903,29 @@
   const seeds = [
     { id: 1,  img: "אגוסטרמת השדות.png",         name: "אַגְרוֹסְטֵמַת הַשָּׂדוֹת",       hoverClass: "hover-teal", latin: "Agrostemma githago",           rarity: "סכנת הכחדה", price: 32, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים בערוגה או באדמה בעומק של 5 ס\"מ ובמרווחים של 10 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הציפורניים. השם הלטיני מורכב מיוונית – agros (שדה) ו-stemma (כתר/זר) – כלומר \"כתר השדה\". הסיבה היא שפעם הייתה נפוצה בשולי שדות." },
     { id: 2,  img: "אפון קיפח.png",               name: "אָפוּן קִפֵּחַ",                  hoverClass: "hover-yellow2",    latin: "Pisum elatius",                rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות בערוגה או בגינה במרווחים של 20 ס\"מ זה מזה ולכסות בכ-2 ס\"מ אדמה. חשוב למקם את הזרעים קרוב לקיר, לקנים או לצמחים שכנים, על מנת לאפשר לו תמיכה קרובה לטיפוס.", desc: "מטפס חד־שנתי ממשפחת הקטניות. שמו נגזר מהמילה \"קיפח\" מהמשנה שפירושה \"גבוה מאוד\" – מכיוון שהוא מטפס לגובה של מטר ומעלה." },
-    { id: 3,  img: "דונגית ארץ ישראלית.png",    name: "דּוֹנַגִּית אֶרֶץ־יִשְׂרְאֵלִית", hoverClass: "hover-yellow",  latin: "Cerinthe palaestina",          rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 15 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הזיפניים. שמו נגזר מהשעווה (דונג) שמכסה את עליו ומונעת מטיפות מים להיספג בהם. אנדמי לישראל ולסוריה." },
-    { id: 4,  img: "דרדר כחול.png",              name: "דַּרְדַּר כָּחֹל",                hoverClass: "hover-lilac",    latin: "Centaurea cyanoides",          rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים ופרפרים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של 1 ס\"מ ובמרווחים של 20 ס\"מ אחד מהשני.", desc: "פרח חד־שנתי ממשפחת המורכבים. בניגוד למצופה, הדרדר הכחול לא קוצני בכלל אלא נעים למגע. אנדמי לישראל ולסוריה." },
-    { id: 5,  img: "זעזועית גדולה.png",          name: "זַעְזוּעִית גְּדוֹלָה",           hoverClass: "hover-orange",  latin: "Briza maxima",                 rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת הדגניים. שיבוליותיה הגדולות מתנדנדות בכל משב רוח קל ומכאן שמו. את התפרחות היבשות אפשר לשים באגרטל ללא מים לקישוט." },
+    { id: 3,  img: "דונגית ארץ ישראלית.png",    icon: "דונגית ארץ ישראלית.png", name: "דּוֹנַגִּית אֶרֶץ־יִשְׂרְאֵלִית", hoverClass: "hover-yellow",  latin: "Cerinthe palaestina",          rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 15 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הזיפניים. שמו נגזר מהשעווה (דונג) שמכסה את עליו ומונעת מטיפות מים להיספג בהם. אנדמי לישראל ולסוריה." },
+    { id: 4,  img: "דרדר כחול.png",              icon: "דרדר כחול.png", name: "דַּרְדַּר כָּחֹל",                hoverClass: "hover-lilac",    latin: "Centaurea cyanoides",          rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים ופרפרים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של 1 ס\"מ ובמרווחים של 20 ס\"מ אחד מהשני.", desc: "פרח חד־שנתי ממשפחת המורכבים. בניגוד למצופה, הדרדר הכחול לא קוצני בכלל אלא נעים למגע. אנדמי לישראל ולסוריה." },
+    { id: 5,  img: "זעזועית גדולה.png",          icon: "זעזועית גדולה.png", name: "זַעְזוּעִית גְּדוֹלָה",           hoverClass: "hover-orange",  latin: "Briza maxima",                 rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת הדגניים. שיבוליותיה הגדולות מתנדנדות בכל משב רוח קל ומכאן שמו. את התפרחות היבשות אפשר לשים באגרטל ללא מים לקישוט." },
     { id: 6,  img: "חוגית תמימה.png",            name: "חוּגִית תְּמִימָה",               hoverClass: "hover-yellow",    latin: "Knautia integrifolia",         rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים ופרפרים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של 1.5 ס\"מ ובמרווחים של 20 ס\"מ אחד מהשני.", desc: "פרח חד־שנתי ממשפחת השלמוניים. מקור השם \"תמימה\" מתייחס לכך שעלי הצמח שלמים (\"תמימים\") ולא משוננים בשוליהם." },
-    { id: 7,  img: "טופח ספרדי.png",             name: "טֹפַח סְפָרַדִּי",               hoverClass: "hover-yellow2", latin: "Lathyrus clymenum",            rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להשרות את הזרעים במים במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, ובאלה שלא יש לחזור על הפעולה שוב עם מים חמימים. את הזרעים התפוחים יש לשתול בעומק של 1.5 ס\"מ ובמרווחים של 20 ס\"מ זה מזה. כדאי לזרוע קרוב לקיר.", desc: "פרח חד־שנתי ממשפחת הקטניות. כשחרק נוחת עליו, משקלו לוחץ על איבר שפולט אבקה על בטן החרק, ממש כמו שלוחצים על שפופרת ומשחת שיניים יוצאת מהפתח." },
+    { id: 7,  img: "טופח ספרדי.png",             icon: "טופח ספרדי.png", name: "טֹפַח סְפָרַדִּי",               hoverClass: "hover-yellow2", latin: "Lathyrus clymenum",            rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להשרות את הזרעים במים במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, ובאלה שלא יש לחזור על הפעולה שוב עם מים חמימים. את הזרעים התפוחים יש לשתול בעומק של 1.5 ס\"מ ובמרווחים של 20 ס\"מ זה מזה. כדאי לזרוע קרוב לקיר.", desc: "פרח חד־שנתי ממשפחת הקטניות. כשחרק נוחת עליו, משקלו לוחץ על איבר שפולט אבקה על בטן החרק, ממש כמו שלוחצים על שפופרת ומשחת שיניים יוצאת מהפתח." },
     { id: 8,  img: "יבשוש חד שנתי.png",          name: "יַבְשׁוּשׁ חַד־שְׁנָתִי",          hoverClass: "hover-lilac",    latin: "Xeranthemum annuum",           rarity: "נדיר מאוד", price: 27, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים ופרפרים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת המורכבים. קרקפותיו הקרומיות שומרות על צורתן וצבען גם כשהצמח מתייבש לגמרי, ולכן מבוקש לזרים יבשים." },
-    { id: 9,  img: "מישויה פעמונית.png",         name: "מִישׁוֹיָה פַּעֲמוֹנִית",        hoverClass: "hover-red", latin: "Michauxia campanuloides",      rarity: "נדיר מאוד", price: 27, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים באדמה מדושנת בעומק של 3 מ\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח דו-שנתי ממשפחת הפעמוניתיים. קרוי על שם הבוטנאי הצרפתי אנדרה מישו (André Michaux), שאסף את הצמח לראשונה במסעותיו במזרח התיכון במאה ה-18." },
-    { id: 10, img: "מרוה דגולה.png",             name: "מַרְוָה דְּגוּלָה",              hoverClass: "hover-yellow",  latin: "Salvia viridis",               rarity: "נדיר",       price: 22, light: "חצי צל", water: "בינונית", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה בעומק של 5 מ\"מ ובמרווחים של 15 ס\"מ זה מזה. ניתן להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה, עד לקבלת שתילים מפותחים ורק לאחר מכן לשתול ישירות באדמה.", desc: "פרח חד־שנתי ממשפחת השפתניים. מקור השם \"דגולה\" נגזר מהמילה \"דגל\" – ומתייחס לצרור החפים הסגולים הבולט שמתנוסס בראש התפרחת כמו דגל." },
-    { id: 11, img: "מרוה כחולה.png",             name: "מַרְוָה כְּחֻלָּה",              hoverClass: "hover-yellow",  latin: "Salvia indica",                rarity: "נדיר מאוד", price: 27, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח עשבוני רב־שנתי ממשפחת השפתניים. שמה מתאר את שילוב הגוונים הכחולים בפרח שנראה מרחוק ככחול אחיד." },
+    { id: 9,  img: "מישויה פעמונית.png",         icon: "מישויה פעמונית.png", name: "מִישׁוֹיָה פַּעֲמוֹנִית",        hoverClass: "hover-red", latin: "Michauxia campanuloides",      rarity: "נדיר מאוד", price: 27, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים באדמה מדושנת בעומק של 3 מ\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח דו-שנתי ממשפחת הפעמוניתיים. קרוי על שם הבוטנאי הצרפתי אנדרה מישו (André Michaux), שאסף את הצמח לראשונה במסעותיו במזרח התיכון במאה ה-18." },
+    { id: 10, img: "מרוה דגולה.png",             icon: "מרוה דגולה.png", name: "מַרְוָה דְּגוּלָה",              hoverClass: "hover-yellow",  latin: "Salvia viridis",               rarity: "נדיר",       price: 22, light: "חצי צל", water: "בינונית", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה בעומק של 5 מ\"מ ובמרווחים של 15 ס\"מ זה מזה. ניתן להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה, עד לקבלת שתילים מפותחים ורק לאחר מכן לשתול ישירות באדמה.", desc: "פרח חד־שנתי ממשפחת השפתניים. מקור השם \"דגולה\" נגזר מהמילה \"דגל\" – ומתייחס לצרור החפים הסגולים הבולט שמתנוסס בראש התפרחת כמו דגל." },
+    { id: 11, img: "מרוה כחולה.png",             icon: "מרוה כחולה.png", name: "מַרְוָה כְּחֻלָּה",              hoverClass: "hover-yellow",  latin: "Salvia indica",                rarity: "נדיר מאוד", price: 27, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח עשבוני רב־שנתי ממשפחת השפתניים. שמה מתאר את שילוב הגוונים הכחולים בפרח שנראה מרחוק ככחול אחיד." },
     { id: 26, img: "מרוה מרושתת.png",         name: "מַרְוָה מְרֻשֶּׁתֶת",            hoverClass: "hover-yellow",  latin: "Salvia sclarea",               rarity: "סכנת הכחדה", price: 32, light: "שטוף שמש", water: "נמוכה עד בינונית", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים בערוגה או באדמה בעומק של 1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח רב־שנתי עשבוני ממשפחת השפתניים. מהזרעים שלה מפיקים שמן עתיר באומגה 3." },
-    { id: 12, img: "מרות ירושלים.png",           name: "מַרְוַת יְרוּשָׁלַיִם",         hoverClass: "hover-yellow2", latin: "Salvia hierosolymitana Boiss", rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח עשבוני רב־שנתי ממשפחת השפתניים. תת-אנדמית לארץ ישראל. גוון הפרחים משתנה מבורדו בדרום הארץ לווורוד בצפונה." },
-    { id: 13, img: "עדעד כחול.png",              name: "עַדְעַד כָּחֹל",                 hoverClass: "hover-orange",  latin: "Limonium sinuatum",            rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה עד בינונית", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות בערוגה או בגינה במרווחים של 30 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "רב־שנתי עשבוני ממשפחת העופריתיים. הגביע הכחול-סגול נשאר צבעוני זמן רב אחרי שהכותרת נושרת ואינו נובל – ומכאן שמו ('עדי-עד')." },
-    { id: 14, img: "פרג אגסי.png",               name: "פֶּרֶג אַגָּסִי",                hoverClass: "hover-yellow2", latin: "Papaver umbonatum",            rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של לפחות 0.5 ס\"מ ובמרווחים של 10 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הפרגיים. שמו ניתן לו בשל עלי הגביע שלו, ההופכים בעת הבשלת הפרי למעין \"תריס\" המגן על הזרעים." },
-    { id: 15, img: "פרגה צהובה.png",             name: "פְּרֵגָה צְהֻבָּה",             hoverClass: "hover-teal",    latin: "Glaucium flavum",              rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים וזבובים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח דו-שנתי ממשפחת הפרגיים. כמו שאר בני משפחתו, עלי הכותרת שלו נפתחים בבוקר ונושרים באותו היום. כל איבריו רעילים." },
+    { id: 12, img: "מרות ירושלים.png",           icon: "מרוות ירושלים.png", name: "מַרְוַת יְרוּשָׁלַיִם",         hoverClass: "hover-yellow2", latin: "Salvia hierosolymitana Boiss", rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח עשבוני רב־שנתי ממשפחת השפתניים. תת-אנדמית לארץ ישראל. גוון הפרחים משתנה מבורדו בדרום הארץ לווורוד בצפונה." },
+    { id: 13, img: "עדעד כחול.png",              icon: "עדעד כחול.png", name: "עַדְעַד כָּחֹל",                 hoverClass: "hover-orange",  latin: "Limonium sinuatum",            rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה עד בינונית", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות בערוגה או בגינה במרווחים של 30 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "רב־שנתי עשבוני ממשפחת העופריתיים. הגביע הכחול-סגול נשאר צבעוני זמן רב אחרי שהכותרת נושרת ואינו נובל – ומכאן שמו ('עדי-עד')." },
+    { id: 14, img: "פרג אגסי.png",               icon: "פרג אגסי.png", name: "פֶּרֶג אַגָּסִי",                hoverClass: "hover-yellow2", latin: "Papaver umbonatum",            rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשפוך מים רותחים על הזרעים ולהשרות אותם במשך 12 שעות. הזרעים שתפחו ושקעו טובים לזריעה, בזרעים שלא תפחו יש לחזור על הפעולה שנית עם מים חמימים. לאחר מכן יש להניח את הזרעים באדמה בעומק של לפחות 0.5 ס\"מ ובמרווחים של 10 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הפרגיים. שמו ניתן לו בשל עלי הגביע שלו, ההופכים בעת הבשלת הפרי למעין \"תריס\" המגן על הזרעים." },
+    { id: 15, img: "פרגה צהובה.png",             icon: "פרגה צהובה.png", name: "פְּרֵגָה צְהֻבָּה",             hoverClass: "hover-teal",    latin: "Glaucium flavum",              rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים וזבובים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח דו-שנתי ממשפחת הפרגיים. כמו שאר בני משפחתו, עלי הכותרת שלו נפתחים בבוקר ונושרים באותו היום. כל איבריו רעילים." },
     { id: 25, img: "פשתה צרת־עלים.png",          name: "פִּשְׁתָּה צָרַת־עָלִים",         hoverClass: "hover-lilac",    latin: "Linum bienne",                 rarity: "נדיר",       price: 22, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הפשתיים. אב הבר של הפשתה התרבותית, ממנה מייצרים את בד הפשתן." },
     { id: 17, img: "צמרורת בואסיה2.png",         name: "צַמְרוּרַת בּוּאֶסִיָּה",        hoverClass: "hover-orange",  latin: "Trichodesma boissieri Post",   rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח רב־שנתי ממשפחת הזיפניים. קרוי על שם הבוטנאי השווייצרי אדמונד בואסייה, שחקר את צמחיית המזרח התיכון במאה ה-19. אנדמי לישראל בלבד." },
     { id: 18, img: "ציפורנית גדולה.png",         name: "צִפַּרְנִית גְּדוֹלָה",          hoverClass: "hover-red",    latin: "Silene swertiifolia Boiss",    rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י פרפרים ורפרפים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח עשבוני רב־שנתי ממשפחת הקטניות. פרחיה הלבנים נפתחים רק בלילה, ומקבלים את פני המבקרים דווקא לעת ערב." },
-    { id: 19, img: "ציפורנית דמשקאית.png",       name: "צִפַּרְנִית דַּמַּשְׂקָאִית",    hoverClass: "hover-teal",    latin: "Silene damascena",             rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת הציפורניים. מקור השם \"דמשקאית\" מתייחס לתפוצתה הגאוגרפית לכיוון אזור דמשק וסוריה." },
+    { id: 19, img: "ציפורנית דמשקאית.png",       icon: "ציפורנית דמשקאית.png", name: "צִפַּרְנִית דַּמַּשְׂקָאִית",    hoverClass: "hover-teal",    latin: "Silene damascena",             rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח חד־שנתי ממשפחת הציפורניים. מקור השם \"דמשקאית\" מתייחס לתפוצתה הגאוגרפית לכיוון אזור דמשק וסוריה." },
     { id: 20, img: "קחוון הגליל.png",            name: "קַחְוַן הַגָּלִיל",              hoverClass: "hover-red",  latin: "Anthemis bornmuelleri",        rarity: "",           price: 18, light: "שטוף שמש", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ אחד מהשני.", desc: "פרח חד־שנתי ממשפחת המורכבים. הוא מרוכז בעיקר באזורי הגליל, הגולן והכרמל ומכאן שמו. תת-אנדמי לישראל ולסוריה." },
-    { id: 21, img: "קחוון הצבעית.png",           name: "קַחְוַן הַצַּבָּעִים",           hoverClass: "hover-teal",    latin: "Anthemis tinctoria",           rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח רב־שנתי עשבוני ממשפחת המורכבים. שמו מתייחס לשימוש היסטורי בפרחיו בצבע טבעי לצמר באירופה." },
-    { id: 22, img: "תלתן הארגמן.png",            name: "תִּלְתָּן הָאַרְגָּמָן",          hoverClass: "hover-yellow",  latin: "Trifolium purpureum",          rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הקטניות. כמו קטניות רבות, משביח ('מדשן') את הקרקע לעצמו ולצמחים הסמוכים." },
+    { id: 21, img: "קחוון הצבעית.png",           icon: "קחוון הצבעים.png", name: "קַחְוַן הַצַּבָּעִים",           hoverClass: "hover-teal",    latin: "Anthemis tinctoria",           rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש לשתול את הזרעים ישירות באדמה מועשרת בקומפוסט, בערוגה או בגינה במרווחים של 50 ס\"מ זה מזה ולכסות בכ-1 ס\"מ אדמה.", desc: "פרח רב־שנתי עשבוני ממשפחת המורכבים. שמו מתייחס לשימוש היסטורי בפרחיו בצבע טבעי לצמר באירופה." },
+    { id: 22, img: "תלתן הארגמן.png",            icon: "תלתן הארגמן.png", name: "תִּלְתָּן הָאַרְגָּמָן",          hoverClass: "hover-yellow",  latin: "Trifolium purpureum",          rarity: "",           price: 18, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הקטניות. כמו קטניות רבות, משביח ('מדשן') את הקרקע לעצמו ולצמחים הסמוכים." },
     { id: 23, img: "תלתן תריסני.png",            name: "תִּלְתָּן תְּרִיסָנִי",           hoverClass: "hover-teal",    latin: "Trifolium clypeatum",          rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להנביט את הזרעים בכוסיות אדמה לחה או מצע הנבטה עשיר ומאוורר, במשך שלושה חודשים עד לקבלת שתילים מפותחים. לאחר מכן יש לשתול את השתילים בערוגה או באדמה בעומק של 0.5-1 ס\"מ ובמרווחים של 50 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הקטניות. שמו ניתן לו בשל עלי הגביע שלו, ההופכים בעת הבשלת הפרי למעין \"תריס\" המגן על הזרעים." },
-    { id: 24, img: "תורמוס ההרים.png",           name: "תֻּרְמוּס הֶהָרִים",              hoverClass: "hover-lilac",    latin: "Lupinus pilosus",              rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להשרות את הזרעים במים במשך 12 שעות. לאחר מכן יש לשתול את הזרעים בערוגה או באדמה בעומק של 1 ס\"מ ובמרווחים של 20 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הקטניות. שמו המדעי Lupinus בא מ\"זאב\" בלטינית, כי האמינו בטעות שהוא מרוקן את הקרקע ממינרלים כמו זאב טורף, בעוד שבפועל הוא דווקא מעשיר אותה בחנקן." },
+    { id: 24, img: "תורמוס ההרים.png",           icon: "תורמוס ההרים.png", name: "תֻּרְמוּס הֶהָרִים",              hoverClass: "hover-lilac",    latin: "Lupinus pilosus",              rarity: "נדיר",       price: 22, light: "חצי צל", water: "נמוכה", pollination: "ע\"י דבורים", growing: "יש להשרות את הזרעים במים במשך 12 שעות. לאחר מכן יש לשתול את הזרעים בערוגה או באדמה בעומק של 1 ס\"מ ובמרווחים של 20 ס\"מ זה מזה.", desc: "פרח חד־שנתי ממשפחת הקטניות. שמו המדעי Lupinus בא מ\"זאב\" בלטינית, כי האמינו בטעות שהוא מרוקן את הקרקע ממינרלים כמו זאב טורף, בעוד שבפועל הוא דווקא מעשיר אותה בחנקן." },
   ];
 
   // ── cursor flower on hover ──
@@ -1034,13 +1013,14 @@
       ? `<img src="${s.img}" alt="${s.name}" style="width:${imgScale};height:${imgScale};object-fit:contain;display:block;margin:auto;">`
       : '';
 
-    const others = seeds.filter(x => x.id !== s.id && x.hoverClass !== s.hoverClass);
+    const others = seeds.filter(x => x.id !== s.id && x.icon);
     const count = 2 + Math.floor(Math.random() * 3);
     const picks = others.sort(() => Math.random() - 0.5).slice(0, count);
+    const chipColor = lightOnDark ? 'white' : '#360EA7';
     document.getElementById('product-pairings').innerHTML = `
       <span class="pairings-label">משתלב טוב עם</span>
       <div class="pairings-chips">
-        ${picks.map(p => { const chipLight = p.hoverClass === 'hover-magenta' || p.hoverClass === 'hover-red'; return `<button class="pairing-chip" style="background:${hoverColors[p.hoverClass] || '#f0ece6'};color:${chipLight ? 'white' : '#360EA7'};" onclick="showProduct(${p.id})">${p.name}</button>`; }).join('')}
+        ${picks.map(p => `<button class="pairing-chip" style="border-color:${chipColor};color:${chipColor};" onclick="showProduct(${p.id})"><img src="אייקונים של פרחים/${encodeURIComponent(p.icon)}" alt="">${p.name}</button>`).join('')}
       </div>
     `;
 
